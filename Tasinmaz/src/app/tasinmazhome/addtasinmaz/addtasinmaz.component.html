@@ -1,0 +1,82 @@
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">
+    <img src="assets/Images/logo_ana.png"style="width:50px;height:50px;" class="img-fluid" alt="Responsive image">
+    <span class="sinmaz">aşınmaz</span>
+  </a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav ml-5">
+    <li class="nav-item">    
+      <img src="assets/Images/menu_bg.png"style="width:750px;height:50px;" class="img-fluid" alt="Responsive image">
+    </li>
+    <li class="nav-item ml-5 changeCursorPoint"> 
+      <i class="fas fa-times-circle" style="font-size: 50px; color: white;"(click)="OntasinmazEkleCikis()" ></i>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row mt-4 container-fluid"style="margin-left: 0px;" >
+    <form [formGroup]="service.formModel" autocomplete="off" (submit)="OnSubmit()">
+    <div class="col-md-6 ml-5 shadow-lg rounded kullanici-kayit-giris-panel">
+      <div class="row">
+        <div class="col-md-6 mt-5 position-absolute">
+        <div class="form-group required">
+            <label> İl: </label>
+            <select class="form-control rounded-pill kullanici-kayit-genislik"  formControlName="Cities" style="padding-top:1px ;" required aria-label (change)="onChangeCitiy($event.target.value)">
+              <!-- <option value="">Select stae...</option> -->
+              <option value="">İl Seçin...</option>
+              <option *ngFor="let city of cities" [value]="city.id">{{city.ilName}} </option>
+            </select>
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Cities').touched && service.formModel.get('Cities').invalid">{{boslukKontrolHataMessage}}</label> 
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Cities').touched && service.formModel.get('Cities').required">{{boslukKontrolHataMessage}}</label> 
+          </div>
+          <div class="form-group required">
+            <label> İlçe: </label>
+            <select class="form-control rounded-pill kullanici-kayit-genislik" disabled formControlName="Districts" style="padding-top:1px ;" required aria-label (change)="OnChangeDistricts($event.target.value)">
+              <option value="">İlçe Seçin...</option>
+              <option *ngFor="let district of districts"  [value]="district.id">{{district.ilceName}}</option>
+            </select>
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Districts').touched && service.formModel.get('Districts').invalid">{{boslukKontrolHataMessage}}</label> 
+          </div>
+          <div class="form-group required">
+            <label> Mahalle: </label>
+            <select class="form-control rounded-pill kullanici-kayit-genislik" disabled formControlName="Neighbourhoods" style="padding-top:1px ;" required aria-label (change)="OnChangeDistricts($event.target.value)">
+              <option value="">Mahalle Seçin...</option>
+              <option *ngFor="let neighbourhood of neighbourhoods"  [value]="neighbourhood.mahalleId">{{neighbourhood.mahalleName}}</option>
+            </select>
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Neighbourhoods').touched && service.formModel.get('Neighbourhoods').invalid">{{boslukKontrolHataMessage}}</label> 
+          </div>
+      </div>
+      <div class="col-md-6 ml-5 mt-5 "style="margin-left:59%!important">
+        <div class="form-group required">  
+          <label> Ada: </label>
+          <input type="text" (keypress)="OnlyNumbersAlowed($event)" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="Ada"> 
+          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Ada').touched && service.formModel.get('Ada').errors?.required">{{boslukKontrolHataMessage}}</label> 
+        </div>
+      </div>
+      <div class="col-md-6 ml-5 "style="margin-left:59%!important">
+        <div class="form-group required">  
+          <label> Parsel: </label>
+          <input type="text" (keypress)="OnlyNumbersAlowed($event)" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="Parsel"> 
+          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Parsel').touched && service.formModel.get('Parsel').errors?.required">{{boslukKontrolHataMessage}}</label> 
+        </div>
+      </div>
+      <div class="col-md-6 ml-5 "style="margin-left:59%!important">
+        <div class="form-group required">  
+          <label> Nitelik: </label>
+          <input class="form-control rounded-pill kullanici-kayit-genislik"formControlName="Nitelik">  
+          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Nitelik').touched && service.formModel.get('Nitelik').errors?.required">{{boslukKontrolHataMessage}}</label> 
+          </div>
+      </div>
+      <div class="form-row ml-4 mt-4" style="margin-left: 6%!important;position: absolute;top: 80%;">
+        <div class="form-group col-md-8 offset-md-2">
+          <button type="submit" class="btn btn-lg btn-block bg-primary text-light rounded-pill kullanici-kayit-genislik" [disabled]="service.formModel.invalid"><img src="assets/Images/eklee.png"style="margin-right:13px; height:40px"/>Taşınmaz Ekle</button>
+        </div>
+      </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>

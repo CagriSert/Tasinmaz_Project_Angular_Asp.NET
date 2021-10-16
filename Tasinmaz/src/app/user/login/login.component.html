@@ -1,0 +1,17 @@
+<div class="container-fluid img-fluid login-bg" style="height:41.5rem;">
+  <div class="col-md-6 shadow-md kullanici-kayit-giris-panel opacity-25 bg-white kullanici-giris-panel">
+  </div>    
+  <img src="assets/Images/logo.png" class="kullanici-giris-logo-ana">
+
+  <form #form='ngForm' autocomplete="off" class="kullanici-giris-form" (submit)="OnSubmit(form)">
+    <div class="form-group">
+      <label>Email</label>
+      <input class="form-control rounded-pill kullanici-giris-genislik" #mail="ngModel" name="Mail" [(ngModel)]="formModel.Email" required>
+    </div>
+    <div class="form-group">
+      <label>Şifre</label>
+      <input type="password" class="form-control rounded-pill kullanici-giris-genislik" #password="ngModel" name="Password" [(ngModel)]="formModel.Password" required>
+    </div>  
+    <button type="submit" class="btn btn-lg mt-5 ml-5 btn-block bg-primary text-light rounded-pill kullanici-giris-genislik"[disabled]="form.invalid"><img src="assets/Images/login.png" img="img-fluid" width="16%" style="margin-right:13px;"/>Kullanıcı Giriş</button>
+  </form>
+</div>

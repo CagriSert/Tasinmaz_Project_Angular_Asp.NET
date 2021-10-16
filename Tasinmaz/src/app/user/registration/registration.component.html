@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">
+    <img src="assets/Images/logo_ana.png"style="width:50px;height:50px;" class="img-fluid" alt="Responsive image">
+    <span class="sinmaz">aşınmaz</span>
+  </a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav ml-5">
+    <li class="nav-item">    
+      <img src="assets/Images/menu_kullanici_ekle_bg.png"style="width:750px;height:50px;" class="img-fluid" alt="Responsive image">
+    </li>
+    <li class="nav-item ml-5 changeCursorPoint"> 
+      <i class="fas fa-times-circle" style="font-size: 50px; color: white;"(click)="OnKullaniciEkleCikis()" ></i>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row mt-4 container-fluid"style="margin-left: 0px;" >
+    <form [formGroup]="service.formModel" autocomplete="off" (submit)="OnSubmit()">
+    <div class="col-md-6 ml-5 shadow-lg rounded kullanici-kayit-giris-panel">
+      <div class="row">
+        <div class="col-md-6 mt-5 position-absolute">
+        <div class="form-group required">
+            <label> Ad: </label>
+            <input class="form-control rounded-pill kullanici-kayit-genislik"formControlName="Name">  
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Name').touched && service.formModel.get('Name').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+          </div>
+          <div class="form-group required">
+            <label> SoyAd: </label>
+            <input class="form-control rounded-pill kullanici-kayit-genislik" formControlName="LastName">  
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('LastName').touched && service.formModel.get('LastName').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+          </div>
+          <div class="form-group required">
+            <label> E-Mail: </label>
+            <input class="form-control rounded-pill kullanici-kayit-genislik" formControlName="Email"> 
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Email').touched && service.formModel.get('Email').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Email').touched && service.formModel.get('Email').errors?.email">Lütfen email adresinizi düzeltin.</label> 
+          </div>
+      </div>
+      <div class="col-md-6 ml-5 mt-5 "style="margin-left:59%!important">
+        <div class="form-group required">  
+          <label> Rol: </label>
+          <select class="form-control rounded-pill kullanici-kayit-genislik"  formControlName="Roles" style="padding-top:1px ;" required aria-label>
+            <option *ngFor="let rol of roles" [ngValue]="rol.id">{{rol.rolName}}</option>
+          </select>
+          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Roles').touched && service.formModel.get('Roles').invalid">{{service.boslukKontrolHataMessage}}</label> 
+        </div>
+        <div formGroupName="Passwords">
+          <div class="form-group required">
+            <label> Şifre:  </label>
+            <input type="password" [type]="showPassword ? 'text' : 'password'" class="form-control rounded-pill kullanici-kayit-genislik"formControlName="Password">
+             <div class="paswordVisible" style="margin-top: 1.5px;">
+              <i alt="show" class="far fa-eye eye-show" 
+              (click)="showPassword = !showPassword"
+              [class.hide]="showPassword"></i>
+              <i alt="hide" class="far fa-eye-slash eye-hide" 
+              (click)="showPassword = !showPassword"
+              [class.hide]="!showPassword"></i>
+            </div>
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Passwords.Password').touched && service.formModel.get('Passwords.Password').errors?.required" >{{service.boslukKontrolHataMessage}}</label> 
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Passwords.Password').touched && service.formModel.get('Passwords.Password').errors?.pattern" style="font-size: 10px;width: 123px;left: 42%;">{{service.sifreKarakterSayiKontrolHataMessage}}</label> 
+          </div>
+          <div class="form-group required">
+            <label> Şifre Tekrar: </label>
+            <input [type]="showConfirmPassword ? 'text' : 'password'"  class="form-control rounded-pill kullanici-kayit-genislik" formControlName="ConfirmPassword">      
+           <div class="paswordVisible" style="margin-top:26%;">
+              <i alt="show" class="far fa-eye eye-show" 
+              (click)="showConfirmPassword = !showConfirmPassword"
+              [class.hide]="showConfirmPassword"></i>
+              <i alt="hide" class="far fa-eye-slash eye-hide" 
+              (click)="showConfirmPassword = !showConfirmPassword"
+              [class.hide]="!showConfirmPassword"></i>
+            </div>
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Passwords.ConfirmPassword').touched && service.formModel.get('Passwords.ConfirmPassword').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Passwords.ConfirmPassword').touched && service.formModel.get('Passwords.ConfirmPassword').errors?.passwordMismatch">{{service.sifreEslesmeKontrolHataMessage}}</label> 
+          </div>
+        </div>
+      </div>
+      <div class="form-row ml-4 mt-4" style="margin-left: 6%!important;position: absolute;top: 80%;">
+        <div class="form-group col-md-8 offset-md-2">
+          <button type="submit" class="btn btn-lg btn-block bg-primary text-light rounded-pill kullanici-kayit-genislik" [disabled]="!service.formModel.valid"><img src="assets/Images/yenikullanici.png"style="margin-right:13px;"/>Kullanıcı Ekle</button>
+        </div>
+      </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>

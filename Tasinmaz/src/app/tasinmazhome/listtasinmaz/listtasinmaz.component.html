@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">
+    <img src="assets/Images/logo_ana.png"style="width:50px;height:50px;" class="img-fluid" alt="Responsive image">
+    <span class="sinmaz">aşınmaz</span>
+  </a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav nav-fill ml-5 menu">
+    <li class="nav-item mr-5 ml-4">    
+        <a href="" class="nav-link">Log Kayıtları</a> 
+    </li>
+
+    <li class="nav-item mr-5 ml-4">    
+      <a class="nav-link" (click)="GetKullanicilarPage()">Kullanıcılar</a>
+    </li>
+    <li class="nav-item mr-5 ml-4">    
+      <a class="nav-link active" (click)="GetTasinmazlarPage()">Taşınmaz Listesi</a>
+    </li>
+    <li class="nav-item ml-5 changeCursorPoint mt-1"style="position:absolute; right:2%"> 
+      <button class="btn btn-danger my-2 my-sm-0 ml-2" (click)="OnLogout()" >
+        <i class="fas fa-door-open" style="font-size: 30px; margin-top: 3px;"></i></button>
+    </li>
+  </ul>
+</nav>
+<div class="conntainer mt-3 ml-4 mr-4 mb-3 text-center">
+  <div class="row border-3 font-weight-bold" >
+    <div class="col-sm-1 border" style="margin-left: 0px!important;">SıraNo</div>
+    <div class="col-sm-1  border b">İl Adı</div>
+    <div class="col-sm-1 border p-1">İlçe Adı</div>
+    <div class="col-sm-2 border p-1">Mahalle Adı</div>
+    <div class="col-sm-1 border p-1">Ada No</div>
+    <div class="col-sm-1 border p-1">Parsel No</div>
+    <div class="col-sm-1 border p-1">Nitelik</div>
+    <div class="col-sm-2 border p-1">Koordinata Git</div>
+    <div class="col-sm-1 border p-1">Güncelle</div>
+    <div class="col-sm-1 border p-1">Sil</div>
+    
+
+
+  </div>
+  <div class="col border-3" style="margin-left: -1.16%;max-width: 120%;width: 102.29%; height:27rem">
+    <!-- <div class="col border" *ngFor="let iii of citiesList | paginate: {itemsPerPage:10, currentPage:page, 
+      totalItems:totalLength}" >
+      {{iii.ilName}}
+    </div> -->
+   <div *ngFor="let item of service.tasinmaz | paginate: {itemsPerPage:10, currentPage:page, 
+    totalItems:totalLength};index as i" class="row">
+      <div class="col-sm-1 border" style="margin-left: 0px!important;">{{item.id}}</div> 
+      <div  class="col-sm-1  border p-1"></div>
+      <div  class="col-sm-1  border p-1">{{item.ilceId}}</div>
+      <div  class="col-sm-2 border p-1">{{item.mahalleId}}</div>
+      <div  class="col-sm-1 border p-1">{{item.ada}}</div>
+      <div  class="col-sm-1 border p-1">{{item.parsel}}</div>
+      <div  class="col-sm-1 border p-1">{{item.nitelik}}</div>
+      <div class="col-sm-2 border p-1"><button style="background-color: white;border-width: 0px;" (click)="onDelete(item.id)"><i class="fas fa-map-marked-alt" style="font-size: 26.2px;color:#dc3545"></i></button></div>
+      <div class="col-sm-1 border p-1"><button style="background-color: white;border-width: 0px;" (click)="onDelete(item.id)"><i class="fas fa-pencil-alt" style="font-size: 26.2px;color:#dc3545"></i></button></div>
+      <div class="col-sm-1 border p-1"><button style="background-color: white;border-width: 0px;" (click)="onDelete(item.id)"><i class="fas fa-trash-alt" style="font-size: 26.2px;color:#dc3545"></i></button></div>
+    </div>
+  </div>
+
+  <pagination-controls 
+  previousLabel="Önceki"
+   nextLabel="Sonraki" 
+   (pageChange)="page = $event"></pagination-controls>
+
+</div>
+<footer style="margin-top: -2%; ">
+  <button type="button" class="btn btn-primary ml-5" style="margin-left: 80%!important;"(click)="onTasinmazEkle()"><i class="fas fa-plus-circle"style="font-size:25px;"> Taşınmaz Ekle</i></button>
+</footer>
