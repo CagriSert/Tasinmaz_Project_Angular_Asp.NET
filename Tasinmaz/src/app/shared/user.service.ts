@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient,HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import {throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
@@ -44,8 +44,6 @@ Register(){
     password:this.formModel.value.Passwords.Password 
   };
   return this.http.post(this.BaseURI+'/Users/Register',body);
-  
-
 }
 
   GetRoles(){
@@ -58,8 +56,7 @@ Register(){
   }
 
   GetUserProfile(){
-    var tokenHeader = new HttpHeaders({'Authorization':'Bearer '+localStorage.getItem('token')})
-    return this.http.get(this.BaseURI+'/UserProfile',{headers:tokenHeader});
+    return this.http.get(this.BaseURI+'/UserProfile');
   }
 
   totalLength:any;
@@ -69,12 +66,17 @@ Register(){
     return this.http.get(this.BaseURI+'/Users').subscribe((result:any)=>{
       this.users = result;
       this.totalLength = result.length;
-
-    });
-    
+    });    
   }
 
   DeleteUser(id:Number){
     return this.http.delete(this.BaseURI+'/Users/Delete/' + id );
+  }
+  UpdateUserDatabase(data:any,id:Number){
+     
+    return this.http.put(this.BaseURI+'/Users/Update/'+id,data)
+    .pipe(map((res:any)=>{
+      return res;  
+    }));
   }
 }

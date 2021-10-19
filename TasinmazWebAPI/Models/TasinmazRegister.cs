@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GeoAPI.Geometries;
 using Tasinmaz.Models;
 
 namespace TasinmazWebAPI.Models
@@ -12,6 +13,7 @@ namespace TasinmazWebAPI.Models
         [ForeignKey("Ils")]
         public int IlId { get; set; }
         public Il Il{ get; set; }
+        
 
         [ForeignKey("Ilces")]
         public int IlceId { get; set; }
@@ -25,5 +27,8 @@ namespace TasinmazWebAPI.Models
         public int Parsel { get; set; }
         public int Ada { get; set; }
         public string Nitelik { get; set; }
+        public string XCoordinate { get; set; }
+        public string YCoordinate { get; set; }
+        // public IPoint Coordinates { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace Tasinmaz.Data
 {
     public interface IDataContext
     {
+        DbSet<Log> Logs { get; set; }
         DbSet<Il> Ils { get; set; }
         DbSet<Ilce> Ilces { get; set; }
         DbSet<Mahalle> Mahalles { get; set; }

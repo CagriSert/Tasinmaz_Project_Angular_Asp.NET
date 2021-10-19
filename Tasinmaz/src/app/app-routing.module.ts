@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
+import { LogComponent } from './log/log.component';
+import { LoglistComponent } from './log/loglist/loglist.component';
 import { AddtasinmazComponent } from './tasinmazhome/addtasinmaz/addtasinmaz.component';
 import { ListtasinmazComponent } from './tasinmazhome/listtasinmaz/listtasinmaz.component';
 import { TasinmazhomeComponent } from './tasinmazhome/tasinmazhome.component';
@@ -25,8 +27,11 @@ const routes: Routes = [
       {path:'addtasinmaz',component:AddtasinmazComponent,canActivate:[AuthGuard]},
       {path:'listtasinmaz',component:ListtasinmazComponent,canActivate:[AuthGuard]},
       {path:'updatetasinmaz',component:UpdatetasinmazComponent,canActivate:[AuthGuard]}
-    ]
-  }
+    ]},
+    {path:'log',component:LogComponent,
+      children:[
+      {path:'loglist',component:LoglistComponent,canActivate:[AuthGuard]}
+      ]}
 ];
 
 @NgModule({

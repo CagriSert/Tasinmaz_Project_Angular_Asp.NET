@@ -128,3 +128,4 @@ C:\Users\TresserT\Desktop\Angular_Asp.NET_TasinmazProject-master\TasinmazWebAPI\
 C:\Users\TresserT\Desktop\Angular_Asp.NET_TasinmazProject-master\TasinmazWebAPI\obj\Debug\net5.0\Tasinmaz.RazorTargetAssemblyInfo.cache
 C:\Users\TresserT\Desktop\Angular_Asp.NET_TasinmazProject-master\TasinmazWebAPI\obj\Debug\net5.0\Tasinmaz.csproj.CopyComplete
 C:\Users\TresserT\Desktop\Angular_Asp.NET_TasinmazProject-master\TasinmazWebAPI\obj\Debug\net5.0\Tasinmaz.genruntimeconfig.cache
+C:\Users\TresserT\Desktop\Angular_Asp.NET_TasinmazProject-master\TasinmazWebAPI\bin\Debug\net5.0\GeoAPI.dll

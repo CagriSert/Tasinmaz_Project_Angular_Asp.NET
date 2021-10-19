@@ -3,5 +3,6 @@ export class UserModel{
     name:string='';
     lastName:string='';
     mail:string='';
-    roles:number=0;
+    rolId:number=0;
+    password:string='';
 }

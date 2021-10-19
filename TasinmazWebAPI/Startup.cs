@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using Tasinmaz.Models;
 using TasinmazWebAPI.Repositories.Abstract;
 using TasinmazWebAPI.Repositories.Concreate;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Tasinmaz
 {
@@ -36,11 +37,12 @@ namespace Tasinmaz
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));  
+            services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDataContext>(provider => provider.GetService<DataContext>());
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITasinmazRepository, TasinmazRepository>();
+            services.AddScoped<ILoggerRepository, LoggerRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -49,12 +51,12 @@ namespace Tasinmaz
             services.AddCors();
 
             var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
-            services.AddAuthentication(x => 
+            services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x=> 
+            }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = false;
@@ -63,7 +65,7 @@ namespace Tasinmaz
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false, 
+                    ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 };
             });
@@ -81,7 +83,8 @@ namespace Tasinmaz
 
             app.UseCors(builder =>
             builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"].ToString())
-            .AllowAnyHeader().AllowAnyMethod()) ;
+            .AllowAnyHeader().AllowAnyMethod());
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 
@@ -93,6 +96,11 @@ namespace Tasinmaz
             {
                 endpoints.MapControllers();
             });
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+                ForwardedHeaders.XForwardedProto
+            });  
         }
     }
 }

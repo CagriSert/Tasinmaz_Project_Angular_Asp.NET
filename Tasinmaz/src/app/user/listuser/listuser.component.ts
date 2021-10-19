@@ -14,6 +14,7 @@ export class ListuserComponent implements OnInit {
 
   formValue !: FormGroup;
   userModelObj : UserModel = new UserModel();
+  searchData:any;
   
 
   constructor(private formBuilder:FormBuilder,
@@ -31,26 +32,16 @@ export class ListuserComponent implements OnInit {
       data => this.roles=data 
     );
     this.service.GetUsers();
+    
     this.formValue = this.formBuilder.group({
       firstName:['',Validators.required],
       lastName:['',Validators.required],
       email:['',[Validators.required,Validators.email]],
-      rolesListUser:['',[Validators.required,Validators.minLength(8),Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&].{8,}')]],
-      // passwords : this.formBuilder.group({
-      //   password:['',[Validators.required,Validators.minLength(8),Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&].{8,}')]],
-      //   confirmPassword:['',Validators.required]
-      // },{validator:this.comparePasswords})
+      rolesListUser:[''],
+      password:['',[Validators.required,Validators.minLength(8),Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&].{8,}')]],
     });
   }
-  comparePasswords(fodmBuilder: FormGroup){
-    let confirmPswrdCtrl = this.formValue.get('confirmPassword');
-    if(confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors){
-      if(this.formValue.get('password').value != confirmPswrdCtrl.value)
-        confirmPswrdCtrl.setErrors({passwordMismatch:true});
-      else
-        confirmPswrdCtrl.setErrors(null);
-    }
-  }
+  
 
   OnLogout(){
     localStorage.removeItem('token');
@@ -69,6 +60,8 @@ export class ListuserComponent implements OnInit {
   }
   
   OnEdit(item:any){
+    this.formValue.reset();
+    this.userModelObj.id = item.id;
     this.formValue.controls['firstName'].setValue(item.name);
     this.formValue.controls['lastName'].setValue(item.lastName);
     this.formValue.controls['email'].setValue(item.mail);
@@ -80,5 +73,25 @@ export class ListuserComponent implements OnInit {
   }
   GetTasinmazlarPage(){
     this.router.navigateByUrl('/tasinmazhome/listtasinmaz');
+  }
+  GetLogPage(){
+    this.router.navigate(['/log/loglist']);
+  }
+
+  UpateUser(){
+    this.userModelObj.rolId = this.formValue.value.rolesListUser;
+    this.userModelObj.name = this.formValue.value.firstName;
+    this.userModelObj.lastName = this.formValue.value.lastName;
+    this.userModelObj.mail = this.formValue.value.email;
+    this.userModelObj.password = this.formValue.value.password;
+    console.log(this.userModelObj);
+    this.service.UpdateUserDatabase(this.userModelObj,this.userModelObj.id)
+    .subscribe(res=>{
+      alert("Kayıt Başarılı bir Şekilde Güncellendi");
+      let ref = document.getElementById('cancel')
+      ref.click();
+      this.formValue.reset();
+      this.service.GetUsers();
+    })
   }
 }

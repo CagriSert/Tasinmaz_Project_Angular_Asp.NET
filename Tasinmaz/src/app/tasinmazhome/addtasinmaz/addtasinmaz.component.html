@@ -22,15 +22,15 @@
     <div class="col-md-6 ml-5 shadow-lg rounded kullanici-kayit-giris-panel">
       <div class="row">
         <div class="col-md-6 mt-5 position-absolute">
-        <div class="form-group required">
+          <div class="form-group required">
             <label> İl: </label>
-            <select class="form-control rounded-pill kullanici-kayit-genislik"  formControlName="Cities" style="padding-top:1px ;" required aria-label (change)="onChangeCitiy($event.target.value)">
+            <select class="form-control rounded-pill kullanici-kayit-genislik"  formControlName="Cities" style="padding-top:1px ;" required aria-label (change)="OnChangeCitiy($event.target.value)">
               <!-- <option value="">Select stae...</option> -->
               <option value="">İl Seçin...</option>
               <option *ngFor="let city of cities" [value]="city.id">{{city.ilName}} </option>
             </select>
-            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Cities').touched && service.formModel.get('Cities').invalid">{{boslukKontrolHataMessage}}</label> 
-            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Cities').touched && service.formModel.get('Cities').required">{{boslukKontrolHataMessage}}</label> 
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Cities').touched && service.formModel.get('Cities').invalid">{{service.boslukKontrolHataMessage}}</label> 
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Cities').touched && service.formModel.get('Cities').required">{{service.boslukKontrolHataMessage}}</label> 
           </div>
           <div class="form-group required">
             <label> İlçe: </label>
@@ -38,7 +38,7 @@
               <option value="">İlçe Seçin...</option>
               <option *ngFor="let district of districts"  [value]="district.id">{{district.ilceName}}</option>
             </select>
-            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Districts').touched && service.formModel.get('Districts').invalid">{{boslukKontrolHataMessage}}</label> 
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Districts').touched && service.formModel.get('Districts').invalid">{{service.boslukKontrolHataMessage}}</label> 
           </div>
           <div class="form-group required">
             <label> Mahalle: </label>
@@ -46,37 +46,57 @@
               <option value="">Mahalle Seçin...</option>
               <option *ngFor="let neighbourhood of neighbourhoods"  [value]="neighbourhood.mahalleId">{{neighbourhood.mahalleName}}</option>
             </select>
-            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Neighbourhoods').touched && service.formModel.get('Neighbourhoods').invalid">{{boslukKontrolHataMessage}}</label> 
+            <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Neighbourhoods').touched && service.formModel.get('Neighbourhoods').invalid">{{service.boslukKontrolHataMessage}}</label> 
           </div>
       </div>
       <div class="col-md-6 ml-5 mt-5 "style="margin-left:59%!important">
         <div class="form-group required">  
           <label> Ada: </label>
           <input type="text" (keypress)="OnlyNumbersAlowed($event)" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="Ada"> 
-          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Ada').touched && service.formModel.get('Ada').errors?.required">{{boslukKontrolHataMessage}}</label> 
+          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Ada').touched && service.formModel.get('Ada').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
         </div>
       </div>
       <div class="col-md-6 ml-5 "style="margin-left:59%!important">
         <div class="form-group required">  
           <label> Parsel: </label>
           <input type="text" (keypress)="OnlyNumbersAlowed($event)" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="Parsel"> 
-          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Parsel').touched && service.formModel.get('Parsel').errors?.required">{{boslukKontrolHataMessage}}</label> 
+          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Parsel').touched && service.formModel.get('Parsel').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
         </div>
       </div>
       <div class="col-md-6 ml-5 "style="margin-left:59%!important">
         <div class="form-group required">  
           <label> Nitelik: </label>
           <input class="form-control rounded-pill kullanici-kayit-genislik"formControlName="Nitelik">  
-          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Nitelik').touched && service.formModel.get('Nitelik').errors?.required">{{boslukKontrolHataMessage}}</label> 
+          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Nitelik').touched && service.formModel.get('Nitelik').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
           </div>
+      </div>
+      <div class="row-md mt-4 ml-4"style="margin:5% auto auto 8%!important;width:150px; ">
+          <div data-toggle="modal" data-target="#mapModal" style="width: 50px;margin-left: 91%;margin-top: -23px;"  class="btn btn-block bg-danger text-light rounded-pill kullanici-kayit-genislik" ><i class="fas fa-map-marker-alt"style="font-size:25px;"></i></div>
+          <input disabled placeholder="X"class="form-control rounded-pill kullanici-kayit-genislik" style="margin-left: 168px;margin-top: -42px;width: 112px;" formControlName="xCoordinates">  
+          <input disabled placeholder="Y"class="form-control rounded-pill kullanici-kayit-genislik" style="margin-left: 280px;margin-top: -40px;width: 112px;" formControlName="yCoordinates">  
       </div>
       <div class="form-row ml-4 mt-4" style="margin-left: 6%!important;position: absolute;top: 80%;">
         <div class="form-group col-md-8 offset-md-2">
-          <button type="submit" class="btn btn-lg btn-block bg-primary text-light rounded-pill kullanici-kayit-genislik" [disabled]="service.formModel.invalid"><img src="assets/Images/eklee.png"style="margin-right:13px; height:40px"/>Taşınmaz Ekle</button>
+          <button type="submit"  class="btn btn-lg btn-block bg-primary text-light rounded-pill kullanici-kayit-genislik" [disabled]="service.formModel.invalid"><img src="assets/Images/eklee.png"style="margin-right:13px; height:40px"/>Taşınmaz Ekle</button>
         </div>
       </div>
       </div>
     </div>
     </form>
+  </div>
+  <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"style="width: 261%;margin-left: -80%;height:38rem;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mapModal">Koordinat Seç</h5>
+          <button type="button" id="cancel" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style=" display: contents;">
+          <div id="ol-map" (click)="getCoord($event)" class="map-container"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

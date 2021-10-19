@@ -16,13 +16,13 @@ userDetails;
     this.service.GetUserProfile().subscribe(
         res=>{
           this.userDetails = res;
-          console.log("umumumummu");
-          console.log(this.userDetails);
+          console.log(this.userDetails.rolId);
         },
         err=>{
           console.log(err);
         },
     );
+    
   }
 
   

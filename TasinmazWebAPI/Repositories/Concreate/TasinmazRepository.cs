@@ -80,12 +80,12 @@ namespace TasinmazWebAPI.Repositories.Concreate
             if(itemToUpdate == null)
                 throw new NullReferenceException();
 
-            itemToUpdate.Il = tasinmazRegister.Il;
-            itemToUpdate.Ilce = tasinmazRegister.Ilce;
-            tasinmazRegister.Mahalle = tasinmazRegister.Mahalle;
-            tasinmazRegister.Ada = tasinmazRegister.Ada;
-            tasinmazRegister.Parsel = tasinmazRegister.Parsel;
-            tasinmazRegister.Nitelik = tasinmazRegister.Nitelik;
+            itemToUpdate.IlId= tasinmazRegister.IlId;
+            itemToUpdate.IlceId = tasinmazRegister.IlceId;
+            itemToUpdate.MahalleId = tasinmazRegister.MahalleId;
+            itemToUpdate.Ada = tasinmazRegister.Ada;
+            itemToUpdate.Parsel = tasinmazRegister.Parsel;
+            itemToUpdate.Nitelik = tasinmazRegister.Nitelik;
             await _context.SaveChangesAsync();
         }
     }

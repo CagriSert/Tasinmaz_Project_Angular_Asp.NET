@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TasinmazService } from 'src/app/shared/tasinmaz.service';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import Tile from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import XYZ from 'ol/source/XYZ';
+import {fromLonLat, transform}from 'ol/proj.js' 
 
 @Component({
   selector: 'app-addtasinmaz',
@@ -10,12 +16,14 @@ import { TasinmazService } from 'src/app/shared/tasinmaz.service';
 })
 export class AddtasinmazComponent implements OnInit {
 
-  boslukKontrolHataMessage='Bu alan zorunludur.';
 
   cities:{};
   districts:{};
   neighbourhoods:{};
-  
+  map:Map;
+  view:View;
+  xCoordinate:number;
+  yCoordinate:number;
   
   constructor(public service : TasinmazService,private router:Router,private toastr:ToastrService) { }
 
@@ -23,8 +31,42 @@ export class AddtasinmazComponent implements OnInit {
     this.service.GetCities().subscribe(
       data => this.cities=data 
     );
+    this.IntilazeMap();
   }
-  onChangeCitiy(citiyId: Number){
+  IntilazeMap(){
+    this.view = new View({
+        center: [3876682.9740679907, 4746346.604388495],
+        zoom: 6.5,
+        minZoom:5.8
+      });
+
+    this.map = new Map({
+     view:this.view,
+      layers: [
+        new Tile({
+          source: new XYZ({
+            url: 'http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}',
+        }),
+        }),
+      ],
+      target: 'ol-map'
+    }); 
+    
+  }
+  getCoord(event: any){
+    if(confirm("Koordinatı Almak istediğinize eminmisiniz??")) {
+       var coordinate = this.map.getEventCoordinate(event);
+       this.xCoordinate=transform(coordinate, 'EPSG:3857', 'EPSG:4326')[1];
+       this.yCoordinate=transform(coordinate, 'EPSG:3857', 'EPSG:4326')[0];
+       this.service.formModel.controls['xCoordinates'].setValue(this.xCoordinate);
+       this.service.formModel.controls['yCoordinates'].setValue(this.yCoordinate);
+       let ref = document.getElementById('cancel')
+       ref.click();
+    }
+ }
+
+
+  OnChangeCitiy(citiyId: Number){
     if(citiyId){
       this.service.GetDistricts(citiyId).subscribe(
           data => {

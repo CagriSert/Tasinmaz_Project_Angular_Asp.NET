@@ -91,3 +91,13 @@ div.form-group.required>label:first-child:after{
 .lblKullaniciGuncelle{
     margin: auto auto auto -74%;
 }
+.map-container {
+    flex-grow: 1;
+}
+.left-bar {
+    width: 20em;
+    background-color: var(--sidebar-color);
+}
+.map-container {
+    flex-grow: 1;
+}

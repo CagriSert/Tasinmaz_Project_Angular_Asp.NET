@@ -26,9 +26,5 @@ namespace Tasinmaz.Models
         public byte[] PasswordHash { get; set; }
         
         
-        
-        
-        
-        
     }
 }

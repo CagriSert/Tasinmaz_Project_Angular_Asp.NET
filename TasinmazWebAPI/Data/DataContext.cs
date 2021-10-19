@@ -14,6 +14,7 @@ namespace Tasinmaz.Data
         {
 
         }
+        public DbSet<Log> Logs { get; set; }
         public DbSet<Il> Ils { get; set; }
         public DbSet<Ilce> Ilces { get; set; }
         public DbSet<Mahalle> Mahalles { get; set; }

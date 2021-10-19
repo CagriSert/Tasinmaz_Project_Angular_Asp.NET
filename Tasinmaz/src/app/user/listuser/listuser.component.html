@@ -6,16 +6,19 @@
   </a>
   
   <!-- Links -->
-  <ul class="navbar-nav nav-fill ml-5 menu">
-    <li class="nav-item mr-5 ml-4">    
-        <a class="nav-link" >Log Kayıtları</a> 
+  <ul class="navbar-nav nav-fill menu" style="margin-left: 8rem!important;"> 
+    <li class="nav-item mr-5 ml-1">    
+        <a class="nav-link" (click)="GetLogPage()" >Log Kayıtları</a> 
     </li>
 
     <li class="nav-item mr-5 ml-4">    
-      <a class="nav-link active" (click)="GetKullanicilarPage()">Kullanıcılar</a>
+      <a class="nav-link active" (click)="GetKullanicilarPage()" >Kullanıcılar</a>
     </li>
     <li class="nav-item mr-5 ml-4">    
-      <a class="nav-link" (click)="GetTasinmazlarPage()">Taşınmaz Listesi</a>
+      <a class="nav-link"  (click)="GetTasinmazlarPage()">Taşınmaz Listesi</a>
+    </li>
+    <li style="margin-top: 15px;">
+      <input type="text" class="form-control"  placeholder="Aranacak Kelimeyi Girin" [(ngModel)]="searchedKeyword">
     </li>
     <li class="nav-item ml-5 changeCursorPoint mt-1"style="position:absolute; right:2%"> 
       <button class="btn btn-danger my-2 my-sm-0 ml-2" (click)="OnLogout()" >
@@ -25,32 +28,37 @@
 </nav>
 
 <div class="conntainer mt-3 ml-4 mr-4 mb-3 text-center">
-  <div class="row border-3 font-weight-bold" >
-    <div class="col-sm-1 border" style="margin-left: 0px!important;">SıraNo</div>
-    <div class="col  border b">Adı</div>
-    <div class="col border p-1">Soy Adı</div>
-    <div class="col border p-1">Mail Adı</div>
-    <div class="col border p-1">Rol</div>
-    <div class="col-sm-1 border p-1">Güncelle</div>
-    <div class="col-sm-1 border p-1">Sil</div>
-  </div>
-  <div class="col border-3" style="margin-left: -1.16%;max-width: 120%;width: 102.29%; height:27rem">
-    <div *ngFor="let item of service.users | paginate: {itemsPerPage:10, currentPage:page, 
-      totalItems:totalLength}" class="row">
-      <div class="col-sm-1 border" style="margin-left: 0px!important;">{{item.id}}</div> 
-      <div  class="col  border">{{item.name}}</div>
-      <div  class="col border p-1">{{item.lastName}}</div>
-      <div  class="col border p-1">{{item.mail}}</div>
-      <div  class="col border p-1">{{item.rolId}}</div>
-      <div class="col-sm-1 border p-1"><button style="background-color: white;border-width: 0px;"  data-toggle="modal" data-target="#exampleModal" (click)="OnEdit(item)"><i class="fas fa-pencil-alt" style="font-size: 26.2px;color:#dc3545"></i></button></div>
-      <div class="col-sm-1 border p-1"><button style="background-color: white;border-width: 0px;" (click)="OnDelete(item.id)"><i class="fas fa-trash-alt" style="font-size: 26.2px;color:#dc3545"></i></button></div>
+  <table class="table table-bordered" style="border-width: 0;">
+    <div class="row border-3 font-weight-bold" >
+      <thead style="margin-left: -11px;">
+          <th style="width: 120px; margin-left: -20px;" >SıraNo</th>
+          <th style="width: 250px; margin-left: -20px;">Adı</th>
+          <th style="width: 250px; margin-left: -20px;" >Soy Adı</th>
+          <th style="width: 250px; margin-left: -20px;" >Mail Adı</th>
+          <th style="width: 170px; margin-left: -20px;">Rol</th>
+          <th style="width: 140px; margin-left: -20px;">Güncelle</th>
+          <th style="width: 140px; margin-left: -20px;">Sil</th>
+      </thead>
     </div>
-  </div>
+    <div class="col border-3" style="padding-left:2px;margin-left: -1.16%;max-width: 120%;width: 102.29%; height:26rem">
+      <tbody>
+        <tr style="margin-left: -20px;" *ngFor="let item of service.users| filter:searchedKeyword| paginate: {itemsPerPage:7, currentPage:page, 
+      totalItems:totalLength}">
+        <td style="width: 120px; margin-left: -20px;">{{item.id}}</td>
+        <td style="width: 250px; margin-left: -20px;">{{item.name}}</td>
+        <td style="width: 250px; margin-left: -20px;">{{item.lastName}}</td>
+        <td style="width: 250px; margin-left: -20px;">{{item.mail}}</td>
+        <td style="width: 170px; margin-left: -20px;">{{item.rolId}}</td>
+        <td style="width: 140px; margin-left: -20px;"><button style="background-color: white;border-width: 0px;"  data-toggle="modal" data-target="#exampleModal" (click)="OnEdit(item)"><i class="fas fa-pencil-alt" style="font-size: 26.2px;color:#dc3545"></i></button></td>
+        <td style="width: 140px; margin-left: -20px;" ><button style="background-color: white;border-width: 0px;" (click)="OnDelete(item.id)"><i class="fas fa-trash-alt" style="font-size: 26.2px;color:#dc3545"></i></button></td>
+       </tr>
+      </tbody>
+    </div>
   <pagination-controls 
   previousLabel="Önceki"
    nextLabel="Sonraki" 
    (pageChange)="page = $event"></pagination-controls>
-
+  </table>
 
 
     <div class="modal fade" style="margin-top: 5%;" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -58,14 +66,14 @@
       <div class="modal-content"style="border-radius: 25px;">
         <div class="modal-header shadow-lg">
           <h5 class="modal-title" id="exampleModalLabel">Kullanıcı Güncelle</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close"id="cancel" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="margin: auto -17px auto 17px;">
           <form [formGroup]="formValue">
             <div class="row">
-              <div class="col-md-6 mt-1 position-absolute">
+              <div class="col-md-6 mt-1">
                 <div class="form-group required">
                   <label class="lblKullaniciGuncelle"> Ad: </label>
                   <input class="form-control rounded-pill kullanici-kayit-genislik" formControlName="firstName">
@@ -76,11 +84,24 @@
                  <input class="form-control rounded-pill kullanici-kayit-genislik" formControlName="lastName">
                  <label class="hata-lbl-kullanici text-danger" *ngIf="formValue.get('lastName').touched && formValue.get('lastName').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
                 </div>
-                <!-- <div formGroupName="passwords">
-                  <div class="form-group required">
-                    <label> Şifre:  </label>
-                    <input type="password" [type]="showPassword ? 'text' : 'password'" class="form-control rounded-pill kullanici-kayit-genislik"formControlName="password">
-                     <div class="paswordVisible" style="margin-top: 1.5px;">
+              </div>
+              <div class="col-md-6 mt-1">
+                <div class="form-group required">  
+                  <label  style="margin:0% auto auto -65%;"> Rol: </label>
+                  <select class="form-control rounded-pill kullanici-kayit-genislik"  formControlName="rolesListUser" style="padding-top:1px ;" required aria-label>
+                    <option *ngFor="let rol of roles" [ngValue]="rol.id">{{rol.rolName}}</option>
+                  </select>
+                </div>
+                <div class="form-group required">
+                  <label style="margin:5% auto auto -65%;"> Mail: </label>
+                 <input class="form-control rounded-pill kullanici-kayit-genislik" formControlName="email">
+                 <label class="hata-lbl-kullanici text-danger" *ngIf="formValue.get('email').touched && formValue.get('email').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+                 <label class="hata-lbl-kullanici text-danger" *ngIf="formValue.get('email').touched && formValue.get('email').errors?.email">Lütfen email adresinizi düzeltin.</label> 
+                </div>
+                  <div class="form-group required"style="margin-left:-129px;margin-right:129px">
+                    <label style="margin:5% auto auto -73%;"> Şifre:  </label>
+                    <input type="password" [type]="showPassword ? 'text' : 'password'" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="password">
+                     <div class="paswordVisible" style="margin-top: 5.3rem; left:1.8rem">
                       <i alt="show" class="far fa-eye eye-show" 
                       (click)="showPassword = !showPassword"
                       [class.hide]="showPassword"></i>
@@ -88,35 +109,24 @@
                       (click)="showPassword = !showPassword"
                       [class.hide]="!showPassword"></i>
                     </div>
-                    <label class="hata-lbl-kullanici text-danger" *ngIf="formValue.get('passwords.password').touched && formValue.get('passwords.password').errors?.required" >{{service.boslukKontrolHataMessage}}</label> 
-                    <label class="hata-lbl-kullanici text-danger" *ngIf="formValue.get('passwords.confirmPassword').touched && formValue.get('passwords.confirmPassword').errors?.pattern" style="font-size: 10px;width: 123px;left: 42%;">{{service.sifreKarakterSayiKontrolHataMessage}}</label> 
+                    <label class="hata-lbl-kullanici text-danger" *ngIf="formValue.get('password').touched && formValue.get('password').errors?.required" >{{service.boslukKontrolHataMessage}}</label> 
+                    <label class="hata-lbl-kullanici text-danger"style="margin-left:-150px; margin-right:190px" *ngIf="formValue.get('password').touched && formValue.get('password').errors?.pattern" >{{service.sifreKarakterSayiKontrolHataMessage}}</label> 
                   </div>
-                  <div class="form-group required">
-                    <label> Şifre Tekrar: </label>
-                    <input [type]="showConfirmPassword ? 'text' : 'password'"  class="form-control rounded-pill kullanici-kayit-genislik" formControlName="confirmPassword">      
-                   <div class="paswordVisible" style="margin-top:26%;">
-                      <i alt="show" class="far fa-eye eye-show" 
-                      (click)="showConfirmPassword = !showConfirmPassword"
-                      [class.hide]="showConfirmPassword"></i>
-                      <i alt="hide" class="far fa-eye-slash eye-hide" 
-                      (click)="showConfirmPassword = !showConfirmPassword"
-                      [class.hide]="!showConfirmPassword"></i>
-                    </div>
-                    <label class="hata-lbl-kullanici text-danger" *ngIf="formValue.get('passwords.confirmPassword').touched && formValue.get('passwords.confirmPassword').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
-                    <label class="hata-lbl-kullanici text-danger" *ngIf="formValue.get('passwords.confirmPassword').touched && formValue.get('passwords.confirmPassword').errors?.passwordMismatch">{{service.sifreEslesmeKontrolHataMessage}}</label> 
-                  </div>
-              </div> -->
-          </div>
-          </div>
+                </div>
+              </div>
           </form>
         </div>
-        <div class="modal-footer" style="margin-top: 65%;">
-          <button type="button" class="btn btn-primary"><i class="fas fa-user-edit mr-1"></i>Güncelle</button>
+        <div class="modal-footer" style="margin-top: 10%;">
+          <button type="button" class="btn btn-primary"[disabled]="!formValue.valid" (click)="UpateUser()"><i class="fas fa-user-edit mr-1"></i>Güncelle</button>
         </div>
     </div>
   </div>
 </div>
+
+
+
+
 </div>  
-<footer style="margin-top: -2%; ">
+<footer style="margin-top: -4.6%; ">
   <button type="button" class="btn btn-primary ml-5" style="margin-left: 80%!important;"(click)="OnKullaniciEkle()"><i class="fas fa-user-plus"style="font-size:25px;"> Kullanıcı Ekle</i></button>
 </footer>

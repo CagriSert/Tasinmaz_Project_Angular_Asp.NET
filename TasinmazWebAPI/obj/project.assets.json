@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net5.0": {
+      "GeoAPI.Core/1.7.5": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/GeoAPI.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/GeoAPI.dll": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -2118,6 +2127,105 @@
     }
   },
   "libraries": {
+    "GeoAPI.Core/1.7.5": {
+      "sha512": "Dy/YkgZ1szgx+xbVWqMi+4++Fm6v3szbVdei1LKPRZ3meSvgNSMZxqhar5IAeaTj5LcUHLtLGdfyUtkjnYbg3A==",
+      "type": "package",
+      "path": "geoapi.core/1.7.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "geoapi.core.1.7.5.nupkg.sha512",
+        "geoapi.core.nuspec",
+        "lib/net20/GeoAPI.dll",
+        "lib/net20/GeoAPI.pdb",
+        "lib/net20/GeoAPI.xml",
+        "lib/net35-cf/GeoAPI.dll",
+        "lib/net35-cf/GeoAPI.pdb",
+        "lib/net35-cf/GeoAPI.xml",
+        "lib/net35-client/GeoAPI.dll",
+        "lib/net35-client/GeoAPI.pdb",
+        "lib/net35-client/GeoAPI.xml",
+        "lib/net40-client/GeoAPI.dll",
+        "lib/net40-client/GeoAPI.pdb",
+        "lib/net40-client/GeoAPI.xml",
+        "lib/net403-client/GeoAPI.dll",
+        "lib/net403-client/GeoAPI.pdb",
+        "lib/net403-client/GeoAPI.xml",
+        "lib/net45/GeoAPI.dll",
+        "lib/net45/GeoAPI.pdb",
+        "lib/net45/GeoAPI.xml",
+        "lib/netstandard1.0/GeoAPI.deps.json",
+        "lib/netstandard1.0/GeoAPI.dll",
+        "lib/netstandard1.0/GeoAPI.pdb",
+        "lib/netstandard1.0/GeoAPI.xml",
+        "lib/netstandard2.0/GeoAPI.deps.json",
+        "lib/netstandard2.0/GeoAPI.dll",
+        "lib/netstandard2.0/GeoAPI.pdb",
+        "lib/netstandard2.0/GeoAPI.xml",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/GeoAPI.dll",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/GeoAPI.pdb",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/GeoAPI.xml",
+        "lib/portable40-net403+sl5+win8+wp8+wpa81/GeoAPI.dll",
+        "lib/portable40-net403+sl5+win8+wp8+wpa81/GeoAPI.pdb",
+        "lib/portable40-net403+sl5+win8+wp8+wpa81/GeoAPI.xml",
+        "src/Consts.cs",
+        "src/DataStructures/Interval.cs",
+        "src/Geometries/Coordinate.cs",
+        "src/Geometries/Dimension.cs",
+        "src/Geometries/Envelope.cs",
+        "src/Geometries/IBoundable.cs",
+        "src/Geometries/ICoordinate.cs",
+        "src/Geometries/ICoordinateBuffer.cs",
+        "src/Geometries/ICoordinateFilter.cs",
+        "src/Geometries/ICoordinateSequence.cs",
+        "src/Geometries/ICoordinateSequenceFactory.cs",
+        "src/Geometries/ICoordinateSequenceFilter.cs",
+        "src/Geometries/ICurve.cs",
+        "src/Geometries/IEnvelope.cs",
+        "src/Geometries/IExpandable.cs",
+        "src/Geometries/IGeometry.cs",
+        "src/Geometries/IGeometryCollection.cs",
+        "src/Geometries/IGeometryComponentFilter.cs",
+        "src/Geometries/IGeometryFactory.cs",
+        "src/Geometries/IGeometryFilter.cs",
+        "src/Geometries/IIntersectable.cs",
+        "src/Geometries/ILineString.cs",
+        "src/Geometries/ILineal.cs",
+        "src/Geometries/ILinearRing.cs",
+        "src/Geometries/IMultiCurve.cs",
+        "src/Geometries/IMultiLineString.cs",
+        "src/Geometries/IMultiPoint.cs",
+        "src/Geometries/IMultiPolygon.cs",
+        "src/Geometries/IMultiSurface.cs",
+        "src/Geometries/IPoint.cs",
+        "src/Geometries/IPolygon.cs",
+        "src/Geometries/IPolygonal.cs",
+        "src/Geometries/IPrecisionModel.cs",
+        "src/Geometries/IPuntal.cs",
+        "src/Geometries/ISurface.cs",
+        "src/Geometries/IntersectionMatrix.cs",
+        "src/Geometries/Location.cs",
+        "src/Geometries/OgcGeometryType.cs",
+        "src/Geometries/Ordinate.cs",
+        "src/Geometries/Ordinates.cs",
+        "src/Geometries/OridinatesUtility.cs",
+        "src/Geometries/Prepared/IPreparedGeometry.cs",
+        "src/GeometryServiceProvider.cs",
+        "src/ICloneable.cs",
+        "src/IGeometryServices.cs",
+        "src/IO/ByteOrder.cs",
+        "src/IO/GeometryType.cs",
+        "src/IO/IGeometryReader.cs",
+        "src/IO/IGeometryWriter.cs",
+        "src/IO/ParseException.cs",
+        "src/Operation/Buffer/BufferStyle.cs",
+        "src/Operation/Buffer/EndCapStyle.cs",
+        "src/Operation/Buffer/IBufferParameters.cs",
+        "src/Operation/Buffer/JoinStyle.cs",
+        "src/Properties/AssemblyInfo.cs",
+        "src/ValueParser.cs"
+      ]
+    },
     "Humanizer.Core/2.8.26": {
       "sha512": "OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "type": "package",
@@ -7134,6 +7242,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "GeoAPI.Core >= 1.7.5",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 2.2.0",
       "Microsoft.AspNetCore.Cors >= 2.2.0",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.10",
@@ -7188,6 +7297,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "GeoAPI.Core": {
+            "target": "Package",
+            "version": "[1.7.5, )"
+          },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
             "version": "[2.2.0, )"

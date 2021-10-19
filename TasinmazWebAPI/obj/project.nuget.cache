@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "U/nYzWr+vYcjOoRtmjIjMWUmef6D+bs65U0sUlJaxfk+gy++5mjfbh0QOiSJFl6WyV379r1tyLAQSTm3LStjoQ==",
+  "dgSpecHash": "Qdyf7yGYTenLe6wi1/xs7GdFsts/47MtdLDPghNINXKm3U3XhhPuB/xBSuaw9s96/M+iiGa5w3rw2+SqPXsJ4g==",
   "success": true,
   "projectFilePath": "C:\\Users\\TresserT\\Desktop\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\Tasinmaz.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\TresserT\\.nuget\\packages\\geoapi.core\\1.7.5\\geoapi.core.1.7.5.nupkg.sha512",
     "C:\\Users\\TresserT\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\TresserT\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\TresserT\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

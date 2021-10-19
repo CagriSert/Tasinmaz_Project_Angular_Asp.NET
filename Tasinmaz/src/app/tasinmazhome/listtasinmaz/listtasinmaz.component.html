@@ -4,67 +4,154 @@
     <img src="assets/Images/logo_ana.png"style="width:50px;height:50px;" class="img-fluid" alt="Responsive image">
     <span class="sinmaz">aşınmaz</span>
   </a>
-  
+ 
   <!-- Links -->
-  <ul class="navbar-nav nav-fill ml-5 menu">
-    <li class="nav-item mr-5 ml-4">    
-        <a href="" class="nav-link">Log Kayıtları</a> 
+  <ul class="navbar-nav nav-fill menu"style="margin-left: 8rem!important;">
+     <li style="margin-top: 15px;" style="position: absolute; left:72.9%;bottom: 19px;">
+        <input type="text" class="form-control"  placeholder="Aranacak Kelimeyi Girin" [(ngModel)]="searchedKeyword">
+    </li>
+    <li class="nav-item mr-5 ml-1">    
+        <a  class="nav-link" (click)="GetLogPage()" *ngIf="userDetails.rolId==1">Log Kayıtları</a> 
     </li>
 
     <li class="nav-item mr-5 ml-4">    
-      <a class="nav-link" (click)="GetKullanicilarPage()">Kullanıcılar</a>
+      <a class="nav-link" (click)="GetKullanicilarPage()" *ngIf="userDetails.rolId==1">Kullanıcılar</a>
     </li>
-    <li class="nav-item mr-5 ml-4">    
-      <a class="nav-link active" (click)="GetTasinmazlarPage()">Taşınmaz Listesi</a>
+    <li class="nav-item mr-5 ml-4" style="position: absolute;left:43.25rem; bottom:8px;z-index: 1;">    
+      <a class="nav-link active" (click)="GetTasinmazlarPage()" >Taşınmaz Listesi</a>
     </li>
-    <li class="nav-item ml-5 changeCursorPoint mt-1"style="position:absolute; right:2%"> 
+    <li class="nav-item ml-5 changeCursorPoint mt-1"style="position:absolute; right:2%;top:8px"> 
       <button class="btn btn-danger my-2 my-sm-0 ml-2" (click)="OnLogout()" >
         <i class="fas fa-door-open" style="font-size: 30px; margin-top: 3px;"></i></button>
     </li>
   </ul>
 </nav>
 <div class="conntainer mt-3 ml-4 mr-4 mb-3 text-center">
-  <div class="row border-3 font-weight-bold" >
-    <div class="col-sm-1 border" style="margin-left: 0px!important;">SıraNo</div>
-    <div class="col-sm-1  border b">İl Adı</div>
-    <div class="col-sm-1 border p-1">İlçe Adı</div>
-    <div class="col-sm-2 border p-1">Mahalle Adı</div>
-    <div class="col-sm-1 border p-1">Ada No</div>
-    <div class="col-sm-1 border p-1">Parsel No</div>
-    <div class="col-sm-1 border p-1">Nitelik</div>
-    <div class="col-sm-2 border p-1">Koordinata Git</div>
-    <div class="col-sm-1 border p-1">Güncelle</div>
-    <div class="col-sm-1 border p-1">Sil</div>
-    
-
-
+  <table class="table table-bordered" id="excel-table" style="border-width: 0;">
+   <div class="row border-3 font-weight-bold" >
+     <thead style="margin-left: -11px;">
+      <tr>
+         <th style="width: 100px; margin-left: -20px;" >SıraNo</th>
+         <th style="width: 170px; margin-left: -20px;"> İl Adı</th>
+         <th style="width: 180px; margin-left: -20px;" >İlçe Adı</th>
+         <th style="width: 170px; margin-left: -20px;">Mahalle Adı</th>
+         <th style="width: 130px; margin-left: -20px;">Ada No</th>
+         <th style="width: 120px; margin-left: -20px;">Parsel No</th>
+         <th style="width: 150px; margin-left: -20px;">Nitelik</th>
+         <th style="width: 150px; margin-left: -20px;">Koordinata Git</th>
+         <th style="width: 100px; margin-left: -20px;" >Güncelle</th>
+         <th style="width: 130px; margin-left: -20px;">Sil</th>
+      </tr>
+    </thead>
   </div>
-  <div class="col border-3" style="margin-left: -1.16%;max-width: 120%;width: 102.29%; height:27rem">
-    <!-- <div class="col border" *ngFor="let iii of citiesList | paginate: {itemsPerPage:10, currentPage:page, 
-      totalItems:totalLength}" >
-      {{iii.ilName}}
-    </div> -->
-   <div *ngFor="let item of service.tasinmaz | paginate: {itemsPerPage:10, currentPage:page, 
-    totalItems:totalLength};index as i" class="row">
-      <div class="col-sm-1 border" style="margin-left: 0px!important;">{{item.id}}</div> 
-      <div  class="col-sm-1  border p-1"></div>
-      <div  class="col-sm-1  border p-1">{{item.ilceId}}</div>
-      <div  class="col-sm-2 border p-1">{{item.mahalleId}}</div>
-      <div  class="col-sm-1 border p-1">{{item.ada}}</div>
-      <div  class="col-sm-1 border p-1">{{item.parsel}}</div>
-      <div  class="col-sm-1 border p-1">{{item.nitelik}}</div>
-      <div class="col-sm-2 border p-1"><button style="background-color: white;border-width: 0px;" (click)="onDelete(item.id)"><i class="fas fa-map-marked-alt" style="font-size: 26.2px;color:#dc3545"></i></button></div>
-      <div class="col-sm-1 border p-1"><button style="background-color: white;border-width: 0px;" (click)="onDelete(item.id)"><i class="fas fa-pencil-alt" style="font-size: 26.2px;color:#dc3545"></i></button></div>
-      <div class="col-sm-1 border p-1"><button style="background-color: white;border-width: 0px;" (click)="onDelete(item.id)"><i class="fas fa-trash-alt" style="font-size: 26.2px;color:#dc3545"></i></button></div>
-    </div>
+  <div class="col border-3" style="padding-left:2px;margin-left: -1.16%;max-width: 120%;width: 102.29%; height:26rem">
+    <tbody >
+    <tr style="margin-left: -20px;" *ngFor="let item of service.tasinmaz | filter:searchedKeyword| paginate: {itemsPerPage:7, currentPage:page, 
+      totalItems:totalLength};index as i">
+      <td style="width: 100px; margin-left: -20px;">{{item.id}}</td>
+      <td style="width: 170px; margin-left: -20px;">{{item.ilId}}</td>
+      <td style="width: 170px; margin-left: -20px;">{{item.ilceId}}</td>
+      <td style="width: 170px; margin-left: -20px;">{{item.mahalleId}}</td>
+      <td style="width: 120px; margin-left: -20px;">{{item.ada}}</td>
+      <td style="width: 120px; margin-left: -20px;">{{item.parsel}}</td>
+      <td style="width: 150px; margin-left: -20px;">{{item.nitelik}}</td>
+      <td style="width: 150px; margin-left: -20px;"><button style="background-color: white;border-width: 0px;" data-toggle="modal" data-target="#mapModal" (click)="GetCoordinates(item);"><i class="fas fa-map-marked-alt" style="font-size: 26.2px;color:#dc3545"></i></button></td>
+      <td style="width: 100px; margin-left: -20px;" ><button style="background-color: white;border-width: 0px;"  data-toggle="modal" data-target="#exampleModal" (click)="OnEdit(item)"><i class="fas fa-pencil-alt" style="font-size: 26.2px;color:#dc3545"></i></button></td>
+      <td style="width: 130px; margin-left: -20px;"><button style="background-color: white;border-width: 0px;" (click)="OnDelete(item.id)"><i class="fas fa-trash-alt" style="font-size: 26.2px;color:#dc3545"></i></button></td>
+    </tr>
+    </tbody>
   </div>
+   
 
-  <pagination-controls 
+  <pagination-controls  style="z-index: 99999;"
   previousLabel="Önceki"
    nextLabel="Sonraki" 
    (pageChange)="page = $event"></pagination-controls>
-
+</table>
+   <div class="modal fade" style="margin-top: 5%;" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"style="border-radius: 25px;">
+        <div class="modal-header shadow-lg">
+          <h5 class="modal-title" id="exampleModalLabel">Kullanıcı Güncelle</h5>
+          <button type="button" (click)="IntilazeMap()"class="close"id="cancel" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="margin: auto -17px auto 17px;">
+          <form [formGroup]="formValueTasinmaz">
+            <div class="row">
+              <div class="col-md-6 mt-1">
+                <div class="form-group required">
+                  <label> İl: </label>
+                  <select class="form-control rounded-pill kullanici-kayit-genislik"  (change)="OnChangeCitiy($event.target.value)" formControlName="cities" style="padding-top:1px ;" required aria-label >
+                    <!-- <option value="">Select stae...</option> -->
+                    <option value="">İl Seçin...</option>
+                    <option *ngFor="let city of citiesList" [value]="city.id">{{city.ilName}} </option>
+                  </select>
+                  <label class="hata-lbl-kullanici text-danger" *ngIf="formValueTasinmaz.get('cities').touched && formValueTasinmaz.get('cities').invalid">{{service.boslukKontrolHataMessage}}</label> 
+                  <label class="hata-lbl-kullanici text-danger" *ngIf="formValueTasinmaz.get('cities').touched && formValueTasinmaz.get('cities').required">{{service.boslukKontrolHataMessage}}</label> 
+                </div>
+                <div class="form-group required">
+                  <label> İlçe: </label>
+                  <select class="form-control rounded-pill kullanici-kayit-genislik" disabled formControlName="districts" style="padding-top:1px ;" required aria-label (change)="OnChangeDistricts($event.target.value)">
+                    <option value="">İlçe Seçin...</option>
+                    <option *ngFor="let district of districts" [value]="district.id">{{district.ilceName}}</option>
+                  </select>
+                  <label class="hata-lbl-kullanici text-danger" *ngIf="formValueTasinmaz.get('districts').touched && formValueTasinmaz.get('districts').invalid">{{service.boslukKontrolHataMessage}}</label> 
+                </div>
+                <div class="form-group required">
+                  <label> Mahalle: </label>
+                  <select class="form-control rounded-pill kullanici-kayit-genislik" disabled formControlName="neighbourhoods" style="padding-top:1px ;" required aria-label (change)="OnChangeDistricts($event.target.value)">
+                    <option value="">Mahalle Seçin...</option>
+                    <option *ngFor="let neighbourhood of neighbourhoods"  [value]="neighbourhood.mahalleId">{{neighbourhood.mahalleName}}</option>
+                  </select>
+                  <label class="hata-lbl-kullanici text-danger" *ngIf="formValueTasinmaz.get('neighbourhoods').touched && formValueTasinmaz.get('neighbourhoods').invalid">{{service.boslukKontrolHataMessage}}</label> 
+                </div>
+              </div>
+              <div class="col-md-6 mt-1">
+                <div class="form-group required">  
+                  <label> Ada: </label>
+                  <input type="text" (keypress)="OnlyNumbersAlowed($event)" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="ada"> 
+                  <label class="hata-lbl-kullanici text-danger" *ngIf="formValueTasinmaz.get('ada').touched && formValueTasinmaz.get('ada').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+                </div>
+                <div class="form-group required">  
+                  <label> Parsel: </label>
+                  <input type="text" (keypress)="OnlyNumbersAlowed($event)" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="parsel"> 
+                  <label class="hata-lbl-kullanici text-danger" *ngIf="formValueTasinmaz.get('parsel').touched && formValueTasinmaz.get('parsel').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+                </div>
+                <div class="form-group required">  
+                  <label> Nitelik: </label>
+                  <input class="form-control rounded-pill kullanici-kayit-genislik"formControlName="nitelik">  
+                  <label class="hata-lbl-kullanici text-danger" *ngIf="formValueTasinmaz.get('nitelik').touched && formValueTasinmaz.get('nitelik').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+                  </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" style="margin-top: 10%;">
+          <button type="button" class="btn btn-primary"[disabled]="!formValueTasinmaz.valid" (click)="UpateTasinmaz()"><i class="fas fa-user-edit mr-1"></i>Güncelle</button>
+        </div>
+    </div>
 </div>
-<footer style="margin-top: -2%; ">
-  <button type="button" class="btn btn-primary ml-5" style="margin-left: 80%!important;"(click)="onTasinmazEkle()"><i class="fas fa-plus-circle"style="font-size:25px;"> Taşınmaz Ekle</i></button>
+</div>
+<div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"style="width: 261%;margin-left: -80%;height:38rem;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mapModal">Konumunuz</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style=" display: contents;">
+        <div (click)="getCoord($event)" id="ol-map" class="map-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer style="margin-top: -4.7%;z-index: 1; ">
+  <button type="button" class="btn btn-success" (click)="Exportexcel()"  style="position:absolute;left:70%"><i class="fas fa-file-excel pl-2" style="font-size:25px;"> Excell</i></button>
+  <button type="button" class="btn btn-primary ml-4" style="margin-left: 80%!important;"(click)="OnTasinmazEkle()"><i class="fas fa-plus-circle"style="font-size:25px;"> Taşınmaz Ekle</i></button>
 </footer>

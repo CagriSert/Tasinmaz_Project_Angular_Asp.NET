@@ -69,7 +69,10 @@ namespace Tasinmaz.Repositories.Concreate
 
             itemToUpdate.Name = user.Name;
             itemToUpdate.LastName = user.LastName;
-            itemToUpdate.Password = user.Password;           
+            itemToUpdate.Mail = user.Mail;
+            itemToUpdate.RolId = user.RolId;
+            itemToUpdate.PasswordHash = user.PasswordHash;           
+            itemToUpdate.PasswordSalt = user.PasswordSalt;           
             await _context.SaveChangesAsync();
                 
         }

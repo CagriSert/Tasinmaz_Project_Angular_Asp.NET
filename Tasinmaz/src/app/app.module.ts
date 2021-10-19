@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms'
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -18,6 +18,10 @@ import { UpdatetasinmazComponent } from './tasinmazhome/updatetasinmaz/updatetas
 
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ListuserComponent } from './user/listuser/listuser.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { LogComponent } from './log/log.component';
+import { LoglistComponent } from './log/loglist/loglist.component';
 
 
 @NgModule({
@@ -30,7 +34,9 @@ import { ListuserComponent } from './user/listuser/listuser.component';
     AddtasinmazComponent,
     ListtasinmazComponent,
     UpdatetasinmazComponent,
-    ListuserComponent
+    ListuserComponent,
+    LogComponent,
+    LoglistComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,9 +48,14 @@ import { ListuserComponent } from './user/listuser/listuser.component';
     ToastrModule.forRoot({
       progressBar:true
     }),
-    FormsModule
+    FormsModule,
+    Ng2SearchPipeModule
   ],
-  providers: [UserService],
+  providers: [UserService,{
+    provide:HTTP_INTERCEPTORS,
+    useClass:AuthInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 
 })

@@ -1,3 +1,5 @@
+using GeoAPI.Geometries;
+
 namespace TasinmazWebAPI.Dtos
 {
     public class CreateTasinmazDto
@@ -8,5 +10,10 @@ namespace TasinmazWebAPI.Dtos
         public int Parsel { get; set; }
         public int Ada { get; set; }
         public string Nitelik { get; set; }
+        public string XCoordinate { get; set; }
+        public string YCoordinate { get; set; }
+        
+        // public IPoint Coordinates { get; set; }
+
     }
 }

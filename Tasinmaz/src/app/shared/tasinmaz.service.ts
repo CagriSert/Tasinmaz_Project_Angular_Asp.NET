@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { AddtasinmazComponent } from '../tasinmazhome/addtasinmaz/addtasinmaz.component';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,8 @@ export class TasinmazService {
   readonly BaseURI='https://localhost:5001/api';
   tasinmaz:[];
   deger:any;
+  boslukKontrolHataMessage='Bu alan zorunludur.';
+
 
   formModel = this.fb.group({
     Cities: ['',Validators.required],
@@ -19,7 +23,9 @@ export class TasinmazService {
     Neighbourhoods:[{value:'',disabled:false}],
     Ada:['',Validators.required],
     Parsel:['',Validators.required],
-    Nitelik:['',Validators.required]
+    Nitelik:['',Validators.required],
+    xCoordinates:[null,Validators.required],
+    yCoordinates:[null,Validators.required]
   });
 
   BtnTasinmazEkle(){
@@ -29,8 +35,11 @@ export class TasinmazService {
       mahalleId:this.formModel.value.Neighbourhoods,
       ada:this.formModel.value.Ada,
       parsel:this.formModel.value.Parsel,
-      nitelik:this.formModel.value.Nitelik
+      nitelik:this.formModel.value.Nitelik,
+      xCoordinate:this.formModel.value.xCoordinates.toString(),
+      yCoordinate:this.formModel.value.yCoordinates.toString()
     };
+    console.log(body);
     return this.http.post(this.BaseURI+'/Tasinmaz/Add',body);
     }
 
@@ -81,6 +90,12 @@ export class TasinmazService {
   DeleteTasinmaz(id:Number){
     return this.http.delete(this.BaseURI+'/Tasinmaz/Delete/' + id );
   }
+  UpdateTasinimazDatabase(data:any,id:Number){
+     
+    return this.http.put(this.BaseURI+'/Tasinmaz/Update/'+id,data)
+    .pipe(map((res:any)=>{
+      return res;  
+    }));
   
   // GetUserProfile(){
   //   var tokenHeader = new HttpHeaders({'Authorization':'Bearer '+localStorage.getItem('token')})
@@ -88,4 +103,5 @@ export class TasinmazService {
   // }
 
 
+  }
 }
