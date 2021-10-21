@@ -42,7 +42,7 @@
           </div>
           <div class="form-group required">
             <label> Mahalle: </label>
-            <select class="form-control rounded-pill kullanici-kayit-genislik" disabled formControlName="Neighbourhoods" style="padding-top:1px ;" required aria-label (change)="OnChangeDistricts($event.target.value)">
+            <select class="form-control rounded-pill kullanici-kayit-genislik" disabled formControlName="Neighbourhoods" style="padding-top:1px ;" required aria-label >
               <option value="">Mahalle Seçin...</option>
               <option *ngFor="let neighbourhood of neighbourhoods"  [value]="neighbourhood.mahalleId">{{neighbourhood.mahalleName}}</option>
             </select>

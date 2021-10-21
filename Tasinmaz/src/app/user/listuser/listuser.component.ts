@@ -53,10 +53,13 @@ export class ListuserComponent implements OnInit {
   
   OnDelete(id:Number)
   {
+    if(confirm(id + "Kaydı Silmek istediğinize eminmisiniz??"))
+    {
     this.service.DeleteUser(id).subscribe(res=>{
-      this.toastr.warning("Kayıt başarılı bir şekilde silindi","Uyarı!!"),
+      this.toastr.success("Kayıt başarılı bir şekilde silindi","Uyarı!!"),
       this.service.GetUsers();
     });
+  }
   }
   
   OnEdit(item:any){
@@ -79,6 +82,8 @@ export class ListuserComponent implements OnInit {
   }
 
   UpateUser(){
+    if(confirm("Kaydı Güncellemek istediğinize eminmisiniz??"))
+  {
     this.userModelObj.rolId = this.formValue.value.rolesListUser;
     this.userModelObj.name = this.formValue.value.firstName;
     this.userModelObj.lastName = this.formValue.value.lastName;
@@ -87,11 +92,12 @@ export class ListuserComponent implements OnInit {
     console.log(this.userModelObj);
     this.service.UpdateUserDatabase(this.userModelObj,this.userModelObj.id)
     .subscribe(res=>{
-      alert("Kayıt Başarılı bir Şekilde Güncellendi");
+      this.toastr.success("Kayıt Başarılı bir Şekilde Güncellendi");
       let ref = document.getElementById('cancel')
       ref.click();
       this.formValue.reset();
       this.service.GetUsers();
     })
   }
+}
 }

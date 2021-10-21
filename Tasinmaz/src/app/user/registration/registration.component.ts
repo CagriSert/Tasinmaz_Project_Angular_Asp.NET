@@ -25,6 +25,7 @@ export class RegistrationComponent implements OnInit {
       (res: any)=>{
           this.service.formModel.reset()
           this.toastr.success('Yeni kullanıcı başarılı bir şekilde oluşturuldu!','Kayıt Başarılı.')
+          this.router.navigate(['/user/listuser']);
         },
         err=>{
           if(err.status == 400){

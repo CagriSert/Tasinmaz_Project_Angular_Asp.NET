@@ -125,12 +125,12 @@ export class ListtasinmazComponent implements OnInit {
           data => {
             this.formValueTasinmaz.controls.districts.enable();
             this.districts = data;
-            this.neighbourhoods = null; 
+            this.neighbourhoods = null;
           }
       );
     }else{
       this.formValueTasinmaz.controls.districts.disable();
-      this.formValueTasinmaz.controls.Neighbourhoods.disable();
+      this.formValueTasinmaz.controls.neighbourhoods.disable();
       this.districts=null;
       this.neighbourhoods=null;
     }
@@ -151,11 +151,18 @@ export class ListtasinmazComponent implements OnInit {
 
   OnDelete(id:Number)
   {
-    this.service.DeleteTasinmaz(id).subscribe(res=>{
-      this.toastr.warning("Kayıt başarılı bir şekilde silindi","Uyarı!!"),
+    if(confirm(id +" numaralı Kaydı Silmek istediğinize eminmisiniz??")) {
+    {
+        this.service.DeleteTasinmaz(id).subscribe(res=>{
+      this.toastr.success("Kayıt başarılı bir şekilde silindi","Uyarı!!"),
       this.service.GetTasinmaz()
     });
   }
+ }
+  }
+
+
+
   OnEdit(item:any){
     this.formValueTasinmaz.reset();
     this.tasinmazModelObj.id = item.id;
@@ -181,6 +188,9 @@ export class ListtasinmazComponent implements OnInit {
   }
 
   UpateTasinmaz(){
+
+    if(confirm("Kaydı Güncellemek istediğinize eminmisiniz??"))
+  {
     this.tasinmazModelObj.ilId = this.formValueTasinmaz.value.cities;
     this.tasinmazModelObj.ilceId = this.formValueTasinmaz.value.districts;
     this.tasinmazModelObj.mahalleId  = this.formValueTasinmaz.value.neighbourhoods;
@@ -190,12 +200,13 @@ export class ListtasinmazComponent implements OnInit {
     console.log(this.tasinmazModelObj);
     this.service.UpdateTasinimazDatabase(this.tasinmazModelObj,this.tasinmazModelObj.id)
     .subscribe(res=>{
-      alert("Kayıt Başarılı bir Şekilde Güncellendi");
+      this.toastr.success("Kayıt Başarılı bir Şekilde Güncellendi");
       let ref = document.getElementById('cancel')
       ref.click();
       this.formValueTasinmaz.reset();
       this.service.GetTasinmaz();
     })
+  }
   }
   GetCities(){
     

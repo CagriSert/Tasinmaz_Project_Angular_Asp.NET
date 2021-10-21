@@ -146,8 +146,9 @@ namespace Tasinmaz.Controllers
             var districts = await _tasinmazRepository.GetAllDistricts(id);
             return Ok(districts);
         }
+        
         [HttpGet("Districts/Single/{id}")]
-        public async Task<ActionaResult<Ilce>> GetSingleDistricts(int id)
+        public async Task<ActionResult<Ilce>> GetSingleDistricts(int id)
         {
             var districts = await _tasinmazRepository.GetSingleDistricts(id);
             return Ok(districts);

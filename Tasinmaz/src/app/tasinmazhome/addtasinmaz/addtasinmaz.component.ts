@@ -112,7 +112,8 @@ export class AddtasinmazComponent implements OnInit {
           this.service.formModel.controls.Districts.disable(),
           this.service.formModel.controls.Neighbourhoods.disable(),
           this.neighbourhoods=null,this.districts=null
-          console.log(this.neighbourhoods);
+          this.router.navigate(['/tasinmazhome/listtasinmaz']);
+
         });        
   }
   OntasinmazEkleCikis(){
