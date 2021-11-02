@@ -37,12 +37,18 @@ namespace Tasinmaz
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string uri = Configuration.GetValue<string>("MetaAPI");
+
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDataContext>(provider => provider.GetService<DataContext>());
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITasinmazRepository, TasinmazRepository>();
             services.AddScoped<ILoggerRepository, LoggerRepository>();
+            services.AddHttpClient();
+            services.AddHttpClient("meta",c=>{
+                c.BaseAddress = new Uri(Configuration.GetValue<string>("MetaAPI"));
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

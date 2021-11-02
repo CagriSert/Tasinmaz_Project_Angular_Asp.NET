@@ -13,7 +13,7 @@ export class TasinmazService {
   constructor(private fb:FormBuilder,private http:HttpClient) { }
   readonly BaseURI='https://localhost:5001/api';
   tasinmaz:[];
-  deger:any;
+  deger:string;
   boslukKontrolHataMessage='Bu alan zorunludur.';
 
 
@@ -25,7 +25,9 @@ export class TasinmazService {
     Parsel:['',Validators.required],
     Nitelik:['',Validators.required],
     xCoordinates:[null,Validators.required],
-    yCoordinates:[null,Validators.required]
+    yCoordinates:[null,Validators.required],
+    xCoordinatesParsel:[null,Validators.required],
+    yCoordinatesParsel:[null,Validators.required]
   });
 
   BtnTasinmazEkle(){
@@ -103,5 +105,16 @@ export class TasinmazService {
   // }
 
 
+  }
+
+   
+  GetParsel(coordinates){
+    console.log(coordinates[0])
+    console.log(coordinates[1])
+    
+    return this.http.get(this.BaseURI + '/Tasinmaz/Parsel/' + coordinates[0],coordinates[1]).subscribe((result:any)=>{
+      //console.log(coordinates);
+    });
+    
   }
 }

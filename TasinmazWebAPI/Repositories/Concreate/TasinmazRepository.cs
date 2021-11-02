@@ -40,7 +40,7 @@ namespace TasinmazWebAPI.Repositories.Concreate
 
         public async Task<IEnumerable<TasinmazRegister>> GetAll()
         {
-            return await _context.TasinmazRegisters.ToListAsync();
+            return await _context.TasinmazRegisters.OrderBy(x=>x.Id).ToListAsync();
         }
 
         public async Task<IEnumerable<Il>> GetAllCities()
@@ -59,20 +59,6 @@ namespace TasinmazWebAPI.Repositories.Concreate
             return await _context.Mahalles.Where(x=>x.IlceId == id).ToListAsync();
         }
 
-        public async Task<Il> GetSingleCities(int id)
-        {
-            return await _context.Ils.FindAsync(id);
-        }
-
-        public async Task<Ilce> GetSingleDistricts(int id)
-        {
-            return await _context.Ilces.FindAsync(id);
-        }
-
-        public async Task<Mahalle> GetSingleNeighbourhood(int id)
-        {
-            return await _context.Mahalles.FindAsync(id);
-        }
 
         public async Task Update(TasinmazRegister tasinmazRegister)
         {

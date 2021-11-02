@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Tasinmaz.Models;
@@ -16,6 +18,7 @@ namespace Tasinmaz.Controllers
     [ApiController]
     public class TasinmazController : ControllerBase
     {
+        HttpClientHandler _clientHandler = new HttpClientHandler();
         private readonly ILoggerRepository _logger;
         private readonly ITasinmazRepository _tasinmazRepository;
         public TasinmazController(ITasinmazRepository tasinmazRepository,ILoggerRepository logger)
@@ -69,8 +72,9 @@ namespace Tasinmaz.Controllers
                 Parsel = createTasinmazDto.Parsel,
                 Nitelik = createTasinmazDto.Nitelik,
                 XCoordinate = (string)createTasinmazDto.XCoordinate,
-                YCoordinate = (string)createTasinmazDto.YCoordinate
+                YCoordinate = (string)createTasinmazDto.YCoordinate,
                 // Coordinates =createTasinmazDto.Coordinates
+                ParselCoordinate = createTasinmazDto.ParselCoordinate
             };
             await _tasinmazRepository.Add(tasinmaz);
             return Ok();
@@ -133,13 +137,7 @@ namespace Tasinmaz.Controllers
             var cities = await _tasinmazRepository.GetAllCities();
             return Ok(cities);
         }
-        [HttpGet("Cities/Single/{id}")]
-        public async Task<ActionResult<Il>> GetSingleCities(int id)
-        {
-            var cities = await _tasinmazRepository.GetSingleCities(id);
-            return Ok(cities);
-        }
-
+      
         [HttpGet("Districts/{id}")]
         public async Task<ActionResult<IEnumerable<Ilce>>> GetDistricts(int id)
         {
@@ -147,12 +145,6 @@ namespace Tasinmaz.Controllers
             return Ok(districts);
         }
         
-        [HttpGet("Districts/Single/{id}")]
-        public async Task<ActionResult<Ilce>> GetSingleDistricts(int id)
-        {
-            var districts = await _tasinmazRepository.GetSingleDistricts(id);
-            return Ok(districts);
-        }
 
         [HttpGet("Neighbourhood/{id}")]
         public async Task<ActionResult<IEnumerable<Mahalle>>> GetNeighbourhood(int id)
@@ -161,13 +153,18 @@ namespace Tasinmaz.Controllers
             return Ok(neighbourhood);
         }
 
-        [HttpGet("Neighbourhood/Single/{id}")]
-        public async Task<ActionResult<Mahalle>> GetSingleNeighbourhood(int id)
-        {
-            var neighbourhood = await _tasinmazRepository.GetSingleNeighbourhood(id);
-            return Ok(neighbourhood);
+         [HttpGet("Parsel/{coordinates}")]
+         public async Task<ActionResult<String>> GetParsel(double x, double y){
+            //List <Var> den = new List<Var>();
+            System.Console.WriteLine(x);
+            System.Console.WriteLine(y);
+            var deneme="";
+            using (var httpClient = new HttpClient(_clientHandler)){
+               using (var response = await httpClient.GetAsync("http://apps.odakgis.com.tr:8282/api/megsis/GetParselWithGeomWktAsync/" + x)){
+                deneme = await response.Content.ReadAsStringAsync();
+               }
+             }
+             return Ok(deneme);
         }
-
-
     }
 }

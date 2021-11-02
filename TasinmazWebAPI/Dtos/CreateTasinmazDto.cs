@@ -12,6 +12,7 @@ namespace TasinmazWebAPI.Dtos
         public string Nitelik { get; set; }
         public string XCoordinate { get; set; }
         public string YCoordinate { get; set; }
+        public string ParselCoordinate { get; set; }
         
         // public IPoint Coordinates { get; set; }
 
