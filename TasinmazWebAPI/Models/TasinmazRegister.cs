@@ -22,7 +22,7 @@ namespace TasinmazWebAPI.Models
        
         [ForeignKey("Mahalles")]
         public int MahalleId { get; set; }
-        public Mahalle Mahalle{ get; set; }
+        public virtual Mahalle Mahalle{ get; set; }
 
         public int Parsel { get; set; }
         public int Ada { get; set; }

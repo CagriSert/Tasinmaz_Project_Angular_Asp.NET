@@ -6,10 +6,24 @@ import { TasinmazService } from 'src/app/shared/tasinmaz.service';
 import { TasinmazModel } from '../Tasinmaz-model board.model';
 import * as XLSX from 'xlsx';
 import Map from 'ol/Map';
-import View from 'ol/View';
+import Point from 'ol/geom/Point';
+import MultiPoint from 'ol/geom/MultiPoint';
+import Feature from 'ol/Feature';
+import Polygon from 'ol/geom/Polygon';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import WKT from 'ol/format/WKT';
 import Tile from 'ol/layer/Tile';
+
+
+import View from 'ol/View';
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
+import Fill from 'ol/style/Fill';
 import OSM from 'ol/source/OSM';
 import XYZ from 'ol/source/XYZ';
+import {Circle as CircleStyle} from 'ol/style';
+
 import { UserService } from 'src/app/shared/user.service';
 import { fromLonLat, transform } from 'ol/proj';
 
@@ -87,36 +101,70 @@ export class ListtasinmazComponent implements OnInit {
     }); 
     
   }
+  
+  parsel:any;
+  vector:any
   GetCoordinates(item){
-    console.log(fromLonLat([item.xCoordinate,item.yCoordinate]));
-    this.view.animate({
-      center:fromLonLat([item.yCoordinate,item.xCoordinate]),
-      zoom:17,
-      duration:2000,
-      easing: this.bounce
+  this.map.removeLayer(this.vector);
+
+    var coor=[item.xCoordinate,item.yCoordinate];
+    console.log(coor);
+
+    var feature = new Feature({
+      labelPoint: new Point(coor),
+      name: 'My Polygon'
     });
-  }
-  bounce(t) {
-    const s = 7.5625;
-    const p = 2.75;
-    let l;
-    if (t < 1 / p) {
-      l = s * t * t;
-    } else {
-      if (t < 2 / p) {
-        t -= 1.5 / p;
-        l = s * t * t + 0.75;
-      } else {
-        if (t < 2.5 / p) {
-          t -= 2.25 / p;
-          l = s * t * t + 0.9375;
-        } else {
-          t -= 2.625 / p;
-          l = s * t * t + 0.984375;
-        }
-      }
-    }
-    return l;
+
+    feature.setGeometryName('labelPoint');
+      var point = feature.getGeometry();
+      
+      var format = new WKT(),
+      wkt = format.writeGeometry(point);
+      console.log(wkt.toString());
+      this.service.GetParsel(wkt.toString()).subscribe(data => this.parsel=data);
+
+     var formats = new WKT()
+
+     var stt = [  new Style({
+      stroke: new Stroke({
+        color: 'red',
+        width: 3,
+      }),
+      fill: new Fill({
+        color: 'rgba(0, 0, 255, 0.1)',
+      }),
+    }),
+    new Style({
+      image: new CircleStyle({
+        radius: 5,
+        fill: new Fill({
+          color: 'orange',
+        }),
+      }),
+    }),
+  ];
+  var featureGeo = formats.readFeature(this.parsel[0]["geomWkt"], {
+    dataProjection: 'EPSG:4326',
+    featureProjection: 'EPSG:3857',
+  });
+
+  var sourr = new VectorSource({
+   features: [featureGeo],
+  });
+  this.vector = new VectorLayer({
+   source: sourr,style:stt
+  });
+
+    this.map.addLayer(this.vector);
+
+
+
+    console.log([item.xCoordinate,item.yCoordinate]);
+    this.view.animate({
+      center:fromLonLat([item.xCoordinate,item.yCoordinate]),
+      zoom:20,
+      duration:4000,
+    });
   }
   
   OnChangeCitiy(citiyId: Number){

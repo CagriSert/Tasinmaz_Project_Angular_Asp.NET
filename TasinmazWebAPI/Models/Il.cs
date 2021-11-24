@@ -10,6 +10,5 @@ namespace Tasinmaz.Models
         public int Id { get; set; }
 
         public string IlName{ get; set; }
-        public virtual List<Ilce> Ilces{ get; set; }
     }
 }

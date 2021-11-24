@@ -52,34 +52,31 @@
       <div class="col-md-6 ml-5 mt-5 "style="margin-left:59%!important">
         <div class="form-group required">  
           <label> Ada: </label>
-          <input type="text" (keypress)="OnlyNumbersAlowed($event)" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="Ada"> 
-          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Ada').touched && service.formModel.get('Ada').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+          <input disabled type="text" placeholder="Parsel" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="Ada"> 
         </div>
       </div>
       <div class="col-md-6 ml-5 "style="margin-left:59%!important">
         <div class="form-group required">  
           <label> Parsel: </label>
-          <div data-toggle="modal" data-target="#mapModalParsel" style="width: 50px;margin-top: 3px;"  class="btn btn-block bg-danger text-light rounded-pill kullanici-kayit-genislik" ><i class="fas fa-map-marker-alt"style="font-size:25px;"></i></div>
-          <input disabled placeholder="X"class="form-control rounded-pill kullanici-kayit-genislik" style="margin-left:50px;margin-top: -38px;width: 100px;" formControlName="xCoordinatesParsel">  
-          <input disabled placeholder="Y"class="form-control rounded-pill kullanici-kayit-genislik" style="margin-left: 148px;margin-top: -38px;width: 100px;" formControlName="yCoordinatesParsel">  
-          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Parsel').touched && service.formModel.get('Parsel').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
-        </div>
+          <div data-toggle="modal" data-target="#mapModalParsel" style="width: 50px;margin-top: -5px;"  class="btn btn-block bg-danger text-light rounded-pill kullanici-kayit-genislik" ><i class="fas fa-map-marker-alt"style="font-size:25px;"></i></div>
+          <input disabled placeholder="Parsel"class="form-control rounded-pill kullanici-kayit-genislik" style="margin-left:50px;margin-top: -40px;width: 195px;" formControlName="Parsel">  
+          </div>
       </div>
       <div class="col-md-6 ml-5 "style="margin-left:59%!important">
         <div class="form-group required">  
           <label> Nitelik: </label>
-          <input class="form-control rounded-pill kullanici-kayit-genislik"formControlName="Nitelik">  
-          <label class="hata-lbl-kullanici text-danger" *ngIf="service.formModel.get('Nitelik').touched && service.formModel.get('Nitelik').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
+          <input disabled class="form-control rounded-pill kullanici-kayit-genislik"formControlName="Nitelik">  
           </div>
       </div>
-      <div class="row-md mt-4 ml-4"style="margin:5% auto auto 8%!important;width:150px; ">
-          <div data-toggle="modal" data-target="#mapModal" style="width: 50px;margin-left: 91%;margin-top: -23px;"  class="btn btn-block bg-danger text-light rounded-pill kullanici-kayit-genislik" ><i class="fas fa-map-marker-alt"style="font-size:25px;"></i></div>
-          <input disabled placeholder="X"class="form-control rounded-pill kullanici-kayit-genislik" style="margin-left: 168px;margin-top: -42px;width: 112px;" formControlName="xCoordinates">  
-          <input disabled placeholder="Y"class="form-control rounded-pill kullanici-kayit-genislik" style="margin-left: 280px;margin-top: -40px;width: 112px;" formControlName="yCoordinates">  
+      <div class="row-md mt-4 ml-4"style="margin:3% auto auto 25%!important;width:150px; ">
+          <label style="margin-left: -20px;"> Koordinata Git: </label>
+          <input disabled placeholder="X"class="form-control rounded-pill kullanici-kayit-genislik" style="margin-left:90px;margin-top: -38px;width: 100px;" formControlName="xCoordinatesParsel">  
+          <input disabled placeholder="Y"class="form-control rounded-pill kullanici-kayit-genislik" style="margin-left: 188px;margin-top: -38px;width: 100px;" formControlName="yCoordinatesParsel">  
+       
       </div>
       <div class="form-row ml-4 mt-4" style="margin-left: 6%!important;position: absolute;top: 80%;">
         <div class="form-group col-md-8 offset-md-2">
-          <button type="submit"  class="btn btn-lg btn-block bg-primary text-light rounded-pill kullanici-kayit-genislik" [disabled]="service.formModel.invalid"><img src="assets/Images/eklee.png"style="margin-right:13px; height:40px"/>Taşınmaz Ekle</button>
+          <button class="btn btn-lg btn-block bg-primary text-light rounded-pill kullanici-kayit-genislik" [disabled]="service.formModel.invalid"><img src="assets/Images/eklee.png"style="margin-right:13px; height:40px"/>Taşınmaz Ekle</button>
         </div>
       </div>
       </div>

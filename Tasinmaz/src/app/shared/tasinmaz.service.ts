@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { pipe } from '@angular/core/src/render3';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { AddtasinmazComponent } from '../tasinmazhome/addtasinmaz/addtasinmaz.component';
 
@@ -10,7 +12,7 @@ import { AddtasinmazComponent } from '../tasinmazhome/addtasinmaz/addtasinmaz.co
 })
 export class TasinmazService {
 
-  constructor(private fb:FormBuilder,private http:HttpClient) { }
+  constructor(private fb:FormBuilder,private http:HttpClient,private toastr: ToastrService) { }
   readonly BaseURI='https://localhost:5001/api';
   tasinmaz:[];
   deger:string;
@@ -21,28 +23,31 @@ export class TasinmazService {
     Cities: ['',Validators.required],
     Districts: [{value:'',disabled:false}],
     Neighbourhoods:[{value:'',disabled:false}],
-    Ada:['',Validators.required],
-    Parsel:['',Validators.required],
-    Nitelik:['',Validators.required],
-    xCoordinates:[null,Validators.required],
-    yCoordinates:[null,Validators.required],
+    Ada:[null,Validators.required],
+    Parsel:[null,Validators.required],
+    Nitelik:[null,Validators.required],
     xCoordinatesParsel:[null,Validators.required],
     yCoordinatesParsel:[null,Validators.required]
   });
 
   BtnTasinmazEkle(){
-    var body={
-      ilId:this.formModel.value.Cities,
-      ilceId:this.formModel.value.Districts,
-      mahalleId:this.formModel.value.Neighbourhoods,
-      ada:this.formModel.value.Ada,
-      parsel:this.formModel.value.Parsel,
-      nitelik:this.formModel.value.Nitelik,
-      xCoordinate:this.formModel.value.xCoordinates.toString(),
-      yCoordinate:this.formModel.value.yCoordinates.toString()
-    };
-    console.log(body);
-    return this.http.post(this.BaseURI+'/Tasinmaz/Add',body);
+    if(this.formModel.value.Ada!=null){
+        var body={
+        ilId:this.formModel.value.Cities,
+        ilceId:this.formModel.value.Districts,
+        mahalleId:this.formModel.value.Neighbourhoods,
+        ada:this.formModel.value.Ada,
+        parsel:this.formModel.value.Parsel,
+        nitelik:this.formModel.value.Nitelik,
+        xCoordinate:this.formModel.value.xCoordinatesParsel.toString(),
+        yCoordinate:this.formModel.value.yCoordinatesParsel.toString()
+      };
+      console.log(body);
+      return this.http.post(this.BaseURI+'/Tasinmaz/Add',body);
+    }else{
+      this.toastr.error("Lütfen parsel yanındaki butona basıp bir koordinak seçin","Hata")
+    }
+    
     }
 
   GetCities(){
@@ -81,6 +86,8 @@ export class TasinmazService {
     return this.http.get(this.BaseURI+'/Tasinmaz').subscribe((result:any)=>{
       this.tasinmaz = result;
       this.totalLength = result.length;
+      console.log("uieuie");
+      console.log(result);
 
       (result as []).forEach((tasinmaz:any)=>{
         this.tasinmazIlId = tasinmaz.ilId;
@@ -107,14 +114,7 @@ export class TasinmazService {
 
   }
 
-   
-  GetParsel(coordinates){
-    console.log(coordinates[0])
-    console.log(coordinates[1])
-    
-    return this.http.get(this.BaseURI + '/Tasinmaz/Parsel/' + coordinates[0],coordinates[1]).subscribe((result:any)=>{
-      //console.log(coordinates);
-    });
-    
+  GetParsel(wkt){
+    return this.http.get(this.BaseURI + '/Tasinmaz/Parsel/'+ wkt).pipe();
   }
 }

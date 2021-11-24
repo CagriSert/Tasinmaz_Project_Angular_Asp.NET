@@ -49,12 +49,12 @@
     <tr style="margin-left: -20px;" *ngFor="let item of service.tasinmaz | filter:searchedKeyword| paginate: {itemsPerPage:7, currentPage:page, 
       totalItems:totalLength};index as i">
       <td style="width: 100px; margin-left: -20px;">{{item.id}}</td>
-      <td style="width: 170px; margin-left: -20px;">{{item.ilId}}</td>
-      <td style="width: 170px; margin-left: -20px;">{{item.ilceId}}</td>
-      <td style="width: 170px; margin-left: -20px;">{{item.mahalleId}}</td>
+      <td style="width: 170px; margin-left: -20px;">{{item.il.ilName}}</td>
+      <td style="width: 170px; margin-left: -20px;">{{item.ilce.ilceName}}</td>
+      <td style="width: 170px; margin-left: -20px; font-size:10px">{{item.mahalle.mahalleName}}</td>
       <td style="width: 120px; margin-left: -20px;">{{item.ada}}</td>
       <td style="width: 120px; margin-left: -20px;">{{item.parsel}}</td>
-      <td style="width: 150px; margin-left: -20px;">{{item.nitelik}}</td>
+      <td style="width: 150px; margin-left: -20px; font-size:11px">{{item.nitelik}}</td>
       <td style="width: 150px; margin-left: -20px;"><button style="background-color: white;border-width: 0px;" data-toggle="modal" data-target="#mapModal" (click)="GetCoordinates(item);"><i class="fas fa-map-marked-alt" style="font-size: 26.2px;color:#dc3545"></i></button></td>
       <td style="width: 100px; margin-left: -20px;" ><button style="background-color: white;border-width: 0px;"  data-toggle="modal" data-target="#exampleModal" (click)="OnEdit(item)"><i class="fas fa-pencil-alt" style="font-size: 26.2px;color:#dc3545"></i></button></td>
       <td style="width: 130px; margin-left: -20px;"><button style="background-color: white;border-width: 0px;" (click)="OnDelete(item.id)"><i class="fas fa-trash-alt" style="font-size: 26.2px;color:#dc3545"></i></button></td>
@@ -111,12 +111,12 @@
               <div class="col-md-6 mt-1">
                 <div class="form-group required">  
                   <label> Ada: </label>
-                  <input type="text" (keypress)="OnlyNumbersAlowed($event)" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="ada"> 
+                  <input class="form-control rounded-pill kullanici-kayit-genislik" formControlName="ada"> 
                   <label class="hata-lbl-kullanici text-danger" *ngIf="formValueTasinmaz.get('ada').touched && formValueTasinmaz.get('ada').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
                 </div>
                 <div class="form-group required">  
                   <label> Parsel: </label>
-                  <input type="text" (keypress)="OnlyNumbersAlowed($event)" class="form-control rounded-pill kullanici-kayit-genislik" formControlName="parsel"> 
+                  <input class="form-control rounded-pill kullanici-kayit-genislik" formControlName="parsel"> 
                   <label class="hata-lbl-kullanici text-danger" *ngIf="formValueTasinmaz.get('parsel').touched && formValueTasinmaz.get('parsel').errors?.required">{{service.boslukKontrolHataMessage}}</label> 
                 </div>
                 <div class="form-group required">  

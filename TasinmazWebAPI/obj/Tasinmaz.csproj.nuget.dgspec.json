@@ -1,18 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cagri\\Desktop\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\Tasinmaz.csproj": {}
+    "C:\\Users\\cagri\\OneDrive\\Masaüstü\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\Tasinmaz.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cagri\\Desktop\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\Tasinmaz.csproj": {
+    "C:\\Users\\cagri\\OneDrive\\Masaüstü\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\Tasinmaz.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cagri\\Desktop\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\Tasinmaz.csproj",
+        "projectUniqueName": "C:\\Users\\cagri\\OneDrive\\Masaüstü\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\Tasinmaz.csproj",
         "projectName": "Tasinmaz",
-        "projectPath": "C:\\Users\\cagri\\Desktop\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\Tasinmaz.csproj",
+        "projectPath": "C:\\Users\\cagri\\OneDrive\\Masaüstü\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\Tasinmaz.csproj",
         "packagesPath": "C:\\Users\\cagri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cagri\\Desktop\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\obj\\",
+        "outputPath": "C:\\Users\\cagri\\OneDrive\\Masaüstü\\Angular_Asp.NET_TasinmazProject-master\\TasinmazWebAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\cagri\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -40,6 +43,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
             "GeoAPI.Core": {
               "target": "Package",
               "version": "[1.7.5, )"

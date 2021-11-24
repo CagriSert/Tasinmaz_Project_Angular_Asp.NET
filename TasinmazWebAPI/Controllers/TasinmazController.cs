@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
@@ -18,6 +19,7 @@ namespace Tasinmaz.Controllers
     [ApiController]
     public class TasinmazController : ControllerBase
     {
+        private string url = "http://apps.odakgis.com.tr:8282/api/megsis/GetParselWithGeomWktAsync/";
         HttpClientHandler _clientHandler = new HttpClientHandler();
         private readonly ILoggerRepository _logger;
         private readonly ITasinmazRepository _tasinmazRepository;
@@ -149,22 +151,25 @@ namespace Tasinmaz.Controllers
         [HttpGet("Neighbourhood/{id}")]
         public async Task<ActionResult<IEnumerable<Mahalle>>> GetNeighbourhood(int id)
         {
+            
             var neighbourhood = await _tasinmazRepository.GetAllNeighbourhood(id);
             return Ok(neighbourhood);
         }
 
-         [HttpGet("Parsel/{coordinates}")]
-         public async Task<ActionResult<String>> GetParsel(double x, double y){
-            //List <Var> den = new List<Var>();
-            System.Console.WriteLine(x);
-            System.Console.WriteLine(y);
-            var deneme="";
+        public List<Object> list = new List<Object>();
+         [HttpGet("Parsel/{geomwkt}")]
+         public async Task<ActionResult<String>> GetParsel(string geomwkt){
+             List<KadastroParselModel> donus = null;
+            // DbGeography dbg = DbGeography.FromText(geomwkt);
             using (var httpClient = new HttpClient(_clientHandler)){
-               using (var response = await httpClient.GetAsync("http://apps.odakgis.com.tr:8282/api/megsis/GetParselWithGeomWktAsync/" + x)){
-                deneme = await response.Content.ReadAsStringAsync();
+               var response = httpClient.GetAsync(url + geomwkt).Result;
+               if(response.StatusCode==System.Net.HttpStatusCode.OK){
+                
+                 donus = JsonConvert.DeserializeObject<List<KadastroParselModel>>(response.Content.ReadAsStringAsync().Result);
                }
-             }
-             return Ok(deneme);
+            }
+            System.Console.WriteLine(list.ToArray());
+             return Ok(donus);
         }
     }
 }

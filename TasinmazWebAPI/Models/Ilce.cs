@@ -15,11 +15,7 @@ namespace Tasinmaz.Models
         [ForeignKey("IlId")]
         public virtual Il Il{ get; set; }
         public int IlId { get; set; }
-        
-        
 
         public string IlceName{ get; set; }
-
-        public virtual List<Mahalle> Mahalles { get; set; }
     }
 }

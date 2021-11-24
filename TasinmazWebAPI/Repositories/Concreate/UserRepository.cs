@@ -58,7 +58,7 @@ namespace Tasinmaz.Repositories.Concreate
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            return await _context.Users.OrderBy(x=>x.Id).ToListAsync();
+            return await _context.Users.OrderByDescending(x=>x.Id).ToListAsync();
         }
 
         public async Task Update(User user)

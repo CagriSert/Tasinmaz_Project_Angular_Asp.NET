@@ -40,7 +40,11 @@ namespace TasinmazWebAPI.Repositories.Concreate
 
         public async Task<IEnumerable<TasinmazRegister>> GetAll()
         {
-            return await _context.TasinmazRegisters.OrderBy(x=>x.Id).ToListAsync();
+            var tasinmazList = _context.TasinmazRegisters
+            .Include(c=> c.Mahalle).ThenInclude(c=>c.Ilce).ThenInclude(c=>c.Il).OrderByDescending(a=>a.Id);//.ThenInclude(a=>a.Ilces);
+            // System.Console.WriteLine(tasinmazList[0].Il.Ilces[0].IlceName);
+            // System.Console.WriteLine(tasinmazList[0].Il.Ilces[0].Mahalles[0].MahalleName);
+            return  tasinmazList;
         }
 
         public async Task<IEnumerable<Il>> GetAllCities()
@@ -50,13 +54,13 @@ namespace TasinmazWebAPI.Repositories.Concreate
 
         public async Task<IEnumerable<Ilce>> GetAllDistricts(int id)
         {
-            return await _context.Ilces.Where(x=>x.IlId == id).ToListAsync();
+            return await _context.Ilces.Include(a=>a.Il).Where(x=>x.IlId == id).ToListAsync();
 
         }
 
         public async Task<IEnumerable<Mahalle>> GetAllNeighbourhood(int id)
         {
-            return await _context.Mahalles.Where(x=>x.IlceId == id).ToListAsync();
+            return await _context.Mahalles.Include(c=>c.Ilce).Where(x=>x.IlceId == id).ToListAsync();
         }
 
 
